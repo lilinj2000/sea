@@ -25,8 +25,8 @@ class TraderSpiImpl : public EESTraderEvent
 
   virtual void OnUserLogon(EES_LogonResponse* pLogon);
 
-  // virtual void OnQueryUserAccount(EES_AccountInfo * pAccoutnInfo, bool bFinish);
-
+  virtual void OnQueryAccountBP(const char* pAccount, EES_AccountBP* pAccountPosition, int nReqId);
+  
   // virtual void OnOrderAccept(EES_OrderAcceptField* pAccept);
 
   // virtual void OnOrderMarketAccept(EES_OrderMarketAcceptField* pAccept);

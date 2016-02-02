@@ -65,7 +65,7 @@ class TraderServiceImpl : public TraderService
   
  protected:
 
-  EES_EnterOrderField* orderField(int& order_ref);
+  EES_EnterOrderField* orderField();
 
   void orderGo(EES_EnterOrderField* req);
   
@@ -84,8 +84,6 @@ class TraderServiceImpl : public TraderService
   std::unique_ptr<soil::STimer> cond_;
 
   std::string trading_day_;
-  
-  std::atomic_int max_order_ref_;
 };
 
 }; // namesapce sea

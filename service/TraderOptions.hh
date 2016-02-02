@@ -28,7 +28,9 @@ class TraderOptions : public soil::Options
   std::string prod_info;
   std::string mac_addr;
 
+  std::string account_id;
 
+  unsigned char exchange_id;
   
  private:
 

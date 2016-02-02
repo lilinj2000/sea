@@ -25,6 +25,10 @@ TraderOptions::TraderOptions():
        "prod info")
       ("sea_trader.mac_addr", po::value<std::string>(&mac_addr), 
        "mac addr")
+      ("sea_trader.account_id", po::value<std::string>(&account_id), 
+       "account id")
+      ("sea_trader.exchange_id", po::value<unsigned char>(&exchange_id), 
+       "exchange id")
       ;
 
   return;

@@ -56,8 +56,8 @@ void TraderSpiImpl::OnUserLogon(EES_LogonResponse* pLogon)
   {
     SEA_PDU <<*pLogon;
 
-
-    // service_->initSession( pRspUserLogin );
+    service_->initSession( pLogon );
+    
     service_->notify();
   }
   catch( ... )
@@ -66,7 +66,15 @@ void TraderSpiImpl::OnUserLogon(EES_LogonResponse* pLogon)
   
 }
 
-  
+void TraderSpiImpl::OnQueryAccountBP(const char* pAccount, EES_AccountBP* pAccountPosition, int nReqId)
+{
+  SEA_TRACE <<"TraderSpiImpl::OnQueryAccountBP()" ;
+
+  SEA_INFO <<"pAccount: " <<pAccount
+           <<"  nReqId: " <<nReqId;
+
+  SEA_INFO <<*pAccountPosition;
+}
 
 
 
