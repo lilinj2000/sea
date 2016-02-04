@@ -8,6 +8,6 @@ fi
 home_boost=$home_3rd/boost
 home_rem=$home_3rd/rem_api_1.0.1.21
 
-export LD_LIBRARY_PATH=$home_boost/lib:$home_rem
+export LD_LIBRARY_PATH=$home_boost/lib:$home_rem/lib/trade/C++/linux64_debug
 
 

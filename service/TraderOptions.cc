@@ -27,7 +27,7 @@ TraderOptions::TraderOptions():
        "mac addr")
       ("sea_trader.account_id", po::value<std::string>(&account_id), 
        "account id")
-      ("sea_trader.exchange_id", po::value<unsigned char>(&exchange_id), 
+      ("sea_trader.exchange_id", po::value<unsigned int>(&exchange_id), 
        "exchange id")
       ;
 

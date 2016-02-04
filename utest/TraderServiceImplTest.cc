@@ -80,7 +80,7 @@ TEST_F(TraderServiceImplTest, orderOpenBuyFOKTest)
 {
 
   std::string instru = "cu1602";
-  double price = 42820;
+  double price = 33210;
   int volume = 10;
   
   service_->orderOpenBuyFOK(instru, price, volume);
@@ -106,7 +106,6 @@ TEST_F(TraderServiceImplTest, orderOpenSellFOKTest)
 
 TEST_F(TraderServiceImplTest, queryAccountTest)
 {
-
   service_->queryAccount();
 
   cond_->wait(2000);

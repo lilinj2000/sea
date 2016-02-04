@@ -30,7 +30,7 @@ class TraderOptions : public soil::Options
 
   std::string account_id;
 
-  unsigned char exchange_id;
+  unsigned int exchange_id;
   
  private:
 

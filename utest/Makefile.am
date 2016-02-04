@@ -29,5 +29,5 @@ unittest_LDFLAGS = $(LIBADD_DL) -Wl,--no-as-needed -pthread
 # header files
 noinst_HEADERS = 
 
-ESEA_DIST = env.sh sea.cfg log.cfg
+EXTRA_DIST = env.sh sea.cfg log.cfg
 

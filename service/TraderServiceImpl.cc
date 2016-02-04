@@ -384,13 +384,17 @@ EES_EnterOrderField* TraderServiceImpl::orderField()
   trader_api_->GetMaxToken(&order_token);
 
   S_INPUT(req.get(), EES_EnterOrderField, m_Account, options_->account_id.data());
-  
+
   req->m_Exchange = options_->exchange_id;
 
+  req->m_SecType = EES_SecType_fut;
+      
   req->m_ForceCloseReason = EES_ForceCloseType_not_force_close;
 
   req->m_ClientOrderToken = order_token + 1;
-  
+
+  req->m_CustomField = 0;
+
   return req.release();
 }
 
