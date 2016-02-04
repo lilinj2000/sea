@@ -122,7 +122,8 @@ am__uninstall_files_from_dir = { \
 am__installdirs = "$(DESTDIR)$(libdir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
 am__DEPENDENCIES_1 =
-libsea_la_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
+libsea_la_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1)
 am_libsea_la_OBJECTS = libsea_la-TraderOptions.lo \
 	libsea_la-TraderSpiImpl.lo libsea_la-TraderServiceImpl.lo
 libsea_la_OBJECTS = $(am_libsea_la_OBJECTS)
@@ -342,7 +343,7 @@ libsea_la_CPPFLAGS = -I$(top_srcdir) \
 			$(REM_CPPFLAGS) \
 			$(SOIL_CPPFLAGS)
 
-libsea_la_LIBADD = $(XELE_LIBADD) \
+libsea_la_LIBADD = $(REM_LIBADD) \
 		$(BOOST_LIBADD) \
 		$(SOIL_LIBADD)
 

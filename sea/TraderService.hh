@@ -11,6 +11,7 @@ namespace sea
 class TraderServiceCallback
 {
  public:
+  
   virtual void onOrderAccept(int client_order_token, int market_order_token) = 0;
   
   virtual void onOrderMarketAccept(int market_order_token) = 0;
@@ -26,9 +27,9 @@ class TraderServiceCallback
 
   virtual void onOrderCxled(int client_order_token,
                             int market_order_token,
-                            unsigned int quntity);
+                            unsigned int quntity) = 0;
 
-  virtual void onCxlOrderReject(int market_order_token);
+  virtual void onCxlOrderReject(int market_order_token) = 0;
 
   virtual ~TraderServiceCallback() {}
 };

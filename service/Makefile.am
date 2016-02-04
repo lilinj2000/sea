@@ -10,7 +10,7 @@ libsea_la_CPPFLAGS = -I$(top_srcdir) \
 			$(REM_CPPFLAGS) \
 			$(SOIL_CPPFLAGS)
 
-libsea_la_LIBADD = $(XELE_LIBADD) \
+libsea_la_LIBADD = $(REM_LIBADD) \
 		$(BOOST_LIBADD) \
 		$(SOIL_LIBADD)
 
