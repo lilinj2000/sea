@@ -81,6 +81,13 @@ void TraderSpiImpl::OnOrderAccept(EES_OrderAcceptField* pAccept)
   SEA_TRACE <<"TraderSpiImpl::OnOrderAccept()" ;
 
   SEA_INFO <<*pAccept;
+
+  if( service_->callback() )
+  {
+    service_->callback()->onOrderAccept( pAccept->m_ClientOrderToken,
+                                         pAccept->m_MarketOrderToken);
+  }
+
 }
 
 void TraderSpiImpl::OnOrderMarketAccept(EES_OrderMarketAcceptField* pAccept)
@@ -88,6 +95,13 @@ void TraderSpiImpl::OnOrderMarketAccept(EES_OrderMarketAcceptField* pAccept)
   SEA_TRACE <<"TraderSpiImpl::OnOrderMarketAccept()" ;
 
   SEA_INFO <<*pAccept;
+
+  if( service_->callback() )
+  {
+    service_->callback()->onOrderMarketAccept( pAccept->m_MarketOrderToken );
+  }
+
+
 }
 
 void TraderSpiImpl::OnOrderReject(EES_OrderRejectField* pReject)
@@ -95,6 +109,12 @@ void TraderSpiImpl::OnOrderReject(EES_OrderRejectField* pReject)
   SEA_TRACE <<"TraderSpiImpl::OnOrderReject()" ;
 
   SEA_INFO <<*pReject;
+
+  if( service_->callback() )
+  {
+    service_->callback()->onOrderReject( pReject->m_ClientOrderToken );
+  }
+
 }
 
 void TraderSpiImpl::OnOrderMarketReject(EES_OrderMarketRejectField* pReject)
@@ -102,6 +122,12 @@ void TraderSpiImpl::OnOrderMarketReject(EES_OrderMarketRejectField* pReject)
   SEA_TRACE <<"TraderSpiImpl::OnOrderMarketReject()" ;
 
   SEA_INFO <<*pReject;
+
+  if( service_->callback() )
+  {
+    service_->callback()->onOrderMarketReject( pReject->m_MarketOrderToken );
+  }
+
 }
 
 void TraderSpiImpl::OnOrderExecution(EES_OrderExecutionField* pExec)
@@ -109,6 +135,15 @@ void TraderSpiImpl::OnOrderExecution(EES_OrderExecutionField* pExec)
   SEA_TRACE <<"TraderSpiImpl::OnOrderExecution()" ;
 
   SEA_INFO <<*pExec;
+
+  if( service_->callback() )
+  {
+    service_->callback()->onOrderExecution( pExec->m_ClientOrderToken,
+                                            pExec->m_MarketOrderToken,
+                                            pExec->m_Quantity,
+                                            pExec->m_Price);
+  }
+
 }
 
 void TraderSpiImpl::OnOrderCxled(EES_OrderCxled* pCxled)
@@ -116,6 +151,14 @@ void TraderSpiImpl::OnOrderCxled(EES_OrderCxled* pCxled)
   SEA_TRACE <<"TraderSpiImpl::OnOrderCxled()" ;
 
   SEA_INFO <<*pCxled;
+
+  if( service_->callback() )
+  {
+    service_->callback()->onOrderCxled( pCxled->m_ClientOrderToken,
+                                        pCxled->m_MarketOrderToken,
+                                        pCxled->m_Decrement);
+  }
+
 }
 
 void TraderSpiImpl::OnCxlOrderReject(EES_CxlOrderRej* pReject)
@@ -123,6 +166,12 @@ void TraderSpiImpl::OnCxlOrderReject(EES_CxlOrderRej* pReject)
   SEA_TRACE <<"TraderSpiImpl::OnCxlOrderReject()" ;
 
   SEA_INFO <<*pReject;
+
+  if( service_->callback() )
+  {
+    service_->callback()->onCxlOrderReject( pReject->m_MarketOrderToken );
+  }
+
 }
 
 void TraderSpiImpl::OnPostOrder(EES_PostOrder* pPostOrder)

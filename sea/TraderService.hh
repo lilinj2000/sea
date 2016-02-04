@@ -11,17 +11,25 @@ namespace sea
 class TraderServiceCallback
 {
  public:
-  virtual void onRspError(int errord_id, const std::string& error_msg)= 0;
+  virtual void onOrderAccept(int client_order_token, int market_order_token) = 0;
   
-  virtual void onRspOrderInsert(int order_ref, bool is_success)= 0;
+  virtual void onOrderMarketAccept(int market_order_token) = 0;
 
-  virtual void onErrRtnOrderInsert(int order_ref) = 0;
+  virtual void onOrderReject(int client_order_token) = 0;
 
-  virtual void onRtnOrder(int order_ref, const std::string& order_status, const std::string& status_msg) = 0;
+  virtual void onOrderMarketReject(int market_order_token) = 0;
 
-  virtual void onRtnTrade(int order_ref,
-                          double price, int volume)= 0;
-  
+  virtual void onOrderExecution(int client_order_token,
+                                int market_order_token,
+                                unsigned int quntity,
+                                double price) = 0;
+
+  virtual void onOrderCxled(int client_order_token,
+                            int market_order_token,
+                            unsigned int quntity);
+
+  virtual void onCxlOrderReject(int market_order_token);
+
   virtual ~TraderServiceCallback() {}
 };
 
