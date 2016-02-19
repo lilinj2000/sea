@@ -88,8 +88,8 @@ AC_ARG_WITH([rem],
     [REM_HOME="$REM_HOME"])
 AC_SUBST([REM_HOME])
 
-REM_CPPFLAGS=-I$REM_HOME/include/trade/C++
-REM_LIBADD="-L$REM_HOME/lib/trade/C++/linux64_debug -lEESTraderApi"
+REM_CPPFLAGS="-I$REM_HOME/include/trade/C++ -I$REM_HOME/include/quote/C++"
+REM_LIBADD="-L$REM_HOME/lib/trade/C++/linux64_debug -lEESTraderApi -L$REM_HOME/lib/quote/C++/linux64_debug -lEESQuoteApi"
 AC_SUBST(REM_CPPFLAGS)
 AC_SUBST(REM_LIBADD)
 

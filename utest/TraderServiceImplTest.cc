@@ -18,7 +18,7 @@ class TraderServiceImplTest : public ::testing::Test
     options_.reset( TraderService::createOptions() );
 
     std::auto_ptr<soil::Config> config( soil::Config::create() );
-    config->configFile() = "sea.cfg";
+    config->configFile() = "trader.cfg";
     config->registerOptions( options_.get() );
     config->loadConfig();
 

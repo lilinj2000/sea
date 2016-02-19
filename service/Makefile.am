@@ -3,7 +3,8 @@ AUTOMAKE_OPTIONS = foreign
 lib_LTLIBRARIES = libsea.la
 libsea_la_SOURCES = \
 		TraderOptions.cc TraderSpiImpl.cc \
-		TraderServiceImpl.cc
+		TraderServiceImpl.cc MDOptions.cc \
+		SeaUtil.cc MDSpiImpl.cc MDServiceImpl.cc
 
 libsea_la_CPPFLAGS = -I$(top_srcdir) \
 			$(BOOST_CPPFLAGS) \
@@ -25,6 +26,11 @@ noinst_HEADERS = \
 	TraderServiceImpl.hh \
 	TraderSpiImpl.hh \
 	SeaLog.hh \
-	EesTraderDefinePrint.hh
+	EesTraderDefinePrint.hh \
+	MDOptions.hh \
+	EESQuoteDefinePrint.hh \
+	SeaUtil.hh \
+	MDSpiImpl.hh \
+	MDServiceImpl.hh
 
 

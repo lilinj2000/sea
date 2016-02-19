@@ -94,7 +94,8 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 PROGRAMS = $(noinst_PROGRAMS)
-am_unittest_OBJECTS = unittest-TraderServiceImplTest.$(OBJEXT)
+am_unittest_OBJECTS = unittest-TraderServiceImplTest.$(OBJEXT) \
+	unittest-MDServiceImplTest.$(OBJEXT)
 unittest_OBJECTS = $(am_unittest_OBJECTS)
 am__DEPENDENCIES_1 =
 unittest_DEPENDENCIES = $(am__DEPENDENCIES_1) ../service/libsea.la \
@@ -350,7 +351,8 @@ top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = foreign
 SUBDIRS = 
 unittest_SOURCES = \
-	TraderServiceImplTest.cc
+	TraderServiceImplTest.cc \
+	MDServiceImplTest.cc
 
 unittest_CPPFLAGS = -I$(top_srcdir) -I.. -I..\
 		$(BOOST_CPPFLAGS) \
@@ -369,7 +371,7 @@ unittest_LDFLAGS = $(LIBADD_DL) -Wl,--no-as-needed -pthread
 
 # header files
 noinst_HEADERS = 
-EXTRA_DIST = env.sh sea.cfg log.cfg
+EXTRA_DIST = env.sh trader.cfg log.cfg md.cfg
 all: all-recursive
 
 .SUFFIXES:
@@ -424,6 +426,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/unittest-MDServiceImplTest.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/unittest-TraderServiceImplTest.Po@am__quote@
 
 .cc.o:
@@ -460,6 +463,20 @@ unittest-TraderServiceImplTest.obj: TraderServiceImplTest.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='TraderServiceImplTest.cc' object='unittest-TraderServiceImplTest.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(unittest_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o unittest-TraderServiceImplTest.obj `if test -f 'TraderServiceImplTest.cc'; then $(CYGPATH_W) 'TraderServiceImplTest.cc'; else $(CYGPATH_W) '$(srcdir)/TraderServiceImplTest.cc'; fi`
+
+unittest-MDServiceImplTest.o: MDServiceImplTest.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(unittest_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT unittest-MDServiceImplTest.o -MD -MP -MF $(DEPDIR)/unittest-MDServiceImplTest.Tpo -c -o unittest-MDServiceImplTest.o `test -f 'MDServiceImplTest.cc' || echo '$(srcdir)/'`MDServiceImplTest.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/unittest-MDServiceImplTest.Tpo $(DEPDIR)/unittest-MDServiceImplTest.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='MDServiceImplTest.cc' object='unittest-MDServiceImplTest.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(unittest_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o unittest-MDServiceImplTest.o `test -f 'MDServiceImplTest.cc' || echo '$(srcdir)/'`MDServiceImplTest.cc
+
+unittest-MDServiceImplTest.obj: MDServiceImplTest.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(unittest_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT unittest-MDServiceImplTest.obj -MD -MP -MF $(DEPDIR)/unittest-MDServiceImplTest.Tpo -c -o unittest-MDServiceImplTest.obj `if test -f 'MDServiceImplTest.cc'; then $(CYGPATH_W) 'MDServiceImplTest.cc'; else $(CYGPATH_W) '$(srcdir)/MDServiceImplTest.cc'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/unittest-MDServiceImplTest.Tpo $(DEPDIR)/unittest-MDServiceImplTest.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='MDServiceImplTest.cc' object='unittest-MDServiceImplTest.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(unittest_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o unittest-MDServiceImplTest.obj `if test -f 'MDServiceImplTest.cc'; then $(CYGPATH_W) 'MDServiceImplTest.cc'; else $(CYGPATH_W) '$(srcdir)/MDServiceImplTest.cc'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo

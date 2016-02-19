@@ -125,7 +125,9 @@ am__DEPENDENCIES_1 =
 libsea_la_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1)
 am_libsea_la_OBJECTS = libsea_la-TraderOptions.lo \
-	libsea_la-TraderSpiImpl.lo libsea_la-TraderServiceImpl.lo
+	libsea_la-TraderSpiImpl.lo libsea_la-TraderServiceImpl.lo \
+	libsea_la-MDOptions.lo libsea_la-SeaUtil.lo \
+	libsea_la-MDSpiImpl.lo libsea_la-MDServiceImpl.lo
 libsea_la_OBJECTS = $(am_libsea_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -336,7 +338,8 @@ AUTOMAKE_OPTIONS = foreign
 lib_LTLIBRARIES = libsea.la
 libsea_la_SOURCES = \
 		TraderOptions.cc TraderSpiImpl.cc \
-		TraderServiceImpl.cc
+		TraderServiceImpl.cc MDOptions.cc \
+		SeaUtil.cc MDSpiImpl.cc MDServiceImpl.cc
 
 libsea_la_CPPFLAGS = -I$(top_srcdir) \
 			$(BOOST_CPPFLAGS) \
@@ -359,7 +362,12 @@ noinst_HEADERS = \
 	TraderServiceImpl.hh \
 	TraderSpiImpl.hh \
 	SeaLog.hh \
-	EesTraderDefinePrint.hh
+	EesTraderDefinePrint.hh \
+	MDOptions.hh \
+	EESQuoteDefinePrint.hh \
+	SeaUtil.hh \
+	MDSpiImpl.hh \
+	MDServiceImpl.hh
 
 all: all-am
 
@@ -440,6 +448,10 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libsea_la-MDOptions.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libsea_la-MDServiceImpl.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libsea_la-MDSpiImpl.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libsea_la-SeaUtil.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libsea_la-TraderOptions.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libsea_la-TraderServiceImpl.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libsea_la-TraderSpiImpl.Plo@am__quote@
@@ -485,6 +497,34 @@ libsea_la-TraderServiceImpl.lo: TraderServiceImpl.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='TraderServiceImpl.cc' object='libsea_la-TraderServiceImpl.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libsea_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libsea_la-TraderServiceImpl.lo `test -f 'TraderServiceImpl.cc' || echo '$(srcdir)/'`TraderServiceImpl.cc
+
+libsea_la-MDOptions.lo: MDOptions.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libsea_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libsea_la-MDOptions.lo -MD -MP -MF $(DEPDIR)/libsea_la-MDOptions.Tpo -c -o libsea_la-MDOptions.lo `test -f 'MDOptions.cc' || echo '$(srcdir)/'`MDOptions.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libsea_la-MDOptions.Tpo $(DEPDIR)/libsea_la-MDOptions.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='MDOptions.cc' object='libsea_la-MDOptions.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libsea_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libsea_la-MDOptions.lo `test -f 'MDOptions.cc' || echo '$(srcdir)/'`MDOptions.cc
+
+libsea_la-SeaUtil.lo: SeaUtil.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libsea_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libsea_la-SeaUtil.lo -MD -MP -MF $(DEPDIR)/libsea_la-SeaUtil.Tpo -c -o libsea_la-SeaUtil.lo `test -f 'SeaUtil.cc' || echo '$(srcdir)/'`SeaUtil.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libsea_la-SeaUtil.Tpo $(DEPDIR)/libsea_la-SeaUtil.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='SeaUtil.cc' object='libsea_la-SeaUtil.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libsea_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libsea_la-SeaUtil.lo `test -f 'SeaUtil.cc' || echo '$(srcdir)/'`SeaUtil.cc
+
+libsea_la-MDSpiImpl.lo: MDSpiImpl.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libsea_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libsea_la-MDSpiImpl.lo -MD -MP -MF $(DEPDIR)/libsea_la-MDSpiImpl.Tpo -c -o libsea_la-MDSpiImpl.lo `test -f 'MDSpiImpl.cc' || echo '$(srcdir)/'`MDSpiImpl.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libsea_la-MDSpiImpl.Tpo $(DEPDIR)/libsea_la-MDSpiImpl.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='MDSpiImpl.cc' object='libsea_la-MDSpiImpl.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libsea_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libsea_la-MDSpiImpl.lo `test -f 'MDSpiImpl.cc' || echo '$(srcdir)/'`MDSpiImpl.cc
+
+libsea_la-MDServiceImpl.lo: MDServiceImpl.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libsea_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libsea_la-MDServiceImpl.lo -MD -MP -MF $(DEPDIR)/libsea_la-MDServiceImpl.Tpo -c -o libsea_la-MDServiceImpl.lo `test -f 'MDServiceImpl.cc' || echo '$(srcdir)/'`MDServiceImpl.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libsea_la-MDServiceImpl.Tpo $(DEPDIR)/libsea_la-MDServiceImpl.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='MDServiceImpl.cc' object='libsea_la-MDServiceImpl.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libsea_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libsea_la-MDServiceImpl.lo `test -f 'MDServiceImpl.cc' || echo '$(srcdir)/'`MDServiceImpl.cc
 
 mostlyclean-libtool:
 	-rm -f *.lo

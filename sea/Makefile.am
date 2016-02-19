@@ -5,7 +5,7 @@ include_HEADERS =
 
 noinst_HEADERS = 
 
-EXTRA_DIST = TraderService.hh
+EXTRA_DIST = TraderService.hh MDService.hh SeaDef.hh
 
 headerdir = $(includedir)/sea
 header_DATA = $(EXTRA_DIST)

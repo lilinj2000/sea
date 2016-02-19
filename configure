@@ -15358,8 +15358,8 @@ fi
 
 
 
-REM_CPPFLAGS=-I$REM_HOME/include/trade/C++
-REM_LIBADD="-L$REM_HOME/lib/trade/C++/linux64_debug -lEESTraderApi"
+REM_CPPFLAGS="-I$REM_HOME/include/trade/C++ -I$REM_HOME/include/quote/C++"
+REM_LIBADD="-L$REM_HOME/lib/trade/C++/linux64_debug -lEESTraderApi -L$REM_HOME/lib/quote/C++/linux64_debug -lEESQuoteApi"
 
 
 
