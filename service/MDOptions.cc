@@ -21,6 +21,18 @@ MDOptions::MDOptions():
        "user id")
       ("sea_md.password", po::value<std::string>(&password), 
        "password")
+      ("sea_md.protocol", po::value<std::string>(&protocol), 
+       "protocol")
+      ("sea_md.multi_ip", po::value<std::string>(&multi_ip), 
+       "multi ip address")
+      ("sea_md.multi_port", po::value<unsigned short>(&multi_port), 
+       "multi port")
+      ("sea_md.local_ip", po::value<std::string>(&local_ip), 
+       "local ip address")
+      ("sea_md.local_port", po::value<unsigned short>(&local_port), 
+       "local port")
+      ("sea_md.exchange_id", po::value<std::string>(&exchange_id), 
+       "exchange id")
       ;
 
   return;

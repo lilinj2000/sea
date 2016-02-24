@@ -25,6 +25,14 @@ class MDOptions : public soil::Options
   std::string user_id;
   std::string password;
 
+  std::string protocol;
+
+  std::string multi_ip;
+  unsigned short multi_port;
+  std::string local_ip;
+  unsigned short local_port;
+  std::string exchange_id;
+
  private:
 
   boost::program_options::options_description options_;
