@@ -1443,7 +1443,7 @@ Optional Packages:
   --with-soil             home path of the soil, defaults to @S|@home_libs/soil
   --with-boost            home path of the boost, defaults to @S|@home_3rd/boost
   --with-rem              path of the rem api, defaults to @S|@REM_HOME
-  --with-gtest            home path of the gtest, defaults to @S|@home_3rd/gtest
+  --with-gtest            home path of the gtest, defaults to @S|@GTEST_HOME
 
 Some influential environment variables:
   CXX         C++ compiler command
@@ -15301,14 +15301,6 @@ LT_AGE=0
 home_3rd=~/3rd
 home_libs=~/libs
 
-if test -d /llj/3rd ; then
-   home_3rd=/llj/3rd
-fi
-
-if test -d /llj/libs ; then
-   home_libs=/llj/libs
-fi
-
 
 @%:@ Check whether --with-soil was given.
 if test "${with_soil+set}" = set; then :
@@ -15347,7 +15339,7 @@ BOOST_LIBADD="$BOOST_HOME/lib/libboost_log_setup.so \
 
 
 
-REM_HOME=$home_3rd/rem_api_1.0.1.21
+REM_HOME=$home_3rd/rem_api_1.0.1.28
 
 @%:@ Check whether --with-rem was given.
 if test "${with_rem+set}" = set; then :
@@ -15359,16 +15351,17 @@ fi
 
 
 REM_CPPFLAGS="-I$REM_HOME/include/trade/C++ -I$REM_HOME/include/quote/C++"
-REM_LIBADD="-L$REM_HOME/lib/trade/C++/linux64_debug -lEESTraderApi -L$REM_HOME/lib/quote/C++/linux64_debug -lEESQuoteApi"
+REM_LIBADD="-L$REM_HOME/lib/trade/C++/linux64 -lEESTraderApi -L$REM_HOME/lib/quote/C++/linux64 -lEESQuoteApi"
 
 
 
+GTEST_HOME=$home_3rd/googletest
 
 @%:@ Check whether --with-gtest was given.
 if test "${with_gtest+set}" = set; then :
   withval=$with_gtest; GTEST_HOME="$withval"
 else
-  GTEST_HOME="$home_3rd/gtest"
+  GTEST_HOME="$GTEST_HOME"
 fi
 
 

@@ -1,3 +1,6 @@
+// Copyright (c) 2010
+// All rights reserved.
+
 #ifndef SEA_LOG_HH
 #define SEA_LOG_HH
 

@@ -1,27 +1,28 @@
+// Copyright (c) 2010
+// All rights reserved.
+
 #ifndef SEA_TRADER_OPTIONS_HH
 #define SEA_TRADER_OPTIONS_HH
 
+#include <string>
 #include "soil/Config.hh"
 
-#include <string>
-
-namespace sea
-{
+namespace sea {
 namespace po = boost::program_options;
 
-class TraderOptions : public soil::Options
-{
+class TraderOptions : public soil::Options {
  public:
-
   TraderOptions();
-  
   virtual ~TraderOptions();
 
   virtual po::options_description* configOptions();
 
-  std::string front_address;
-  int port;
-  
+  std::string svr_address;
+  int svr_port;
+
+  std::string qry_address;
+  int qry_port;
+
   std::string user_id;
   std::string password;
 
@@ -31,13 +32,11 @@ class TraderOptions : public soil::Options
   std::string account_id;
 
   unsigned int exchange_id;
-  
- private:
 
+ private:
   boost::program_options::options_description options_;
 };
 
-}  
+}  // namespace sea
 
-
-#endif 
+#endif

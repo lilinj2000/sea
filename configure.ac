@@ -37,14 +37,6 @@ AC_SUBST(LT_AGE)
 home_3rd=~/3rd
 home_libs=~/libs
 
-if test -d /llj/3rd ; then
-   home_3rd=/llj/3rd
-fi
-
-if test -d /llj/libs ; then
-   home_libs=/llj/libs
-fi
-
 dnl soil lib
 AC_ARG_WITH([soil],
     [AS_HELP_STRING([--with-soil],
@@ -80,7 +72,7 @@ AC_SUBST(BOOST_CPPFLAGS)
 AC_SUBST(BOOST_LIBADD)
 
 dnl rem api lib
-REM_HOME=$home_3rd/rem_api_1.0.1.21
+REM_HOME=$home_3rd/rem_api_1.0.1.28
 AC_ARG_WITH([rem],
     [AS_HELP_STRING([--with-rem],
         [path of the rem api, defaults to $REM_HOME])],
@@ -89,16 +81,17 @@ AC_ARG_WITH([rem],
 AC_SUBST([REM_HOME])
 
 REM_CPPFLAGS="-I$REM_HOME/include/trade/C++ -I$REM_HOME/include/quote/C++"
-REM_LIBADD="-L$REM_HOME/lib/trade/C++/linux64_debug -lEESTraderApi -L$REM_HOME/lib/quote/C++/linux64_debug -lEESQuoteApi"
+REM_LIBADD="-L$REM_HOME/lib/trade/C++/linux64 -lEESTraderApi -L$REM_HOME/lib/quote/C++/linux64 -lEESQuoteApi"
 AC_SUBST(REM_CPPFLAGS)
 AC_SUBST(REM_LIBADD)
 
 dnl gtest lib
+GTEST_HOME=$home_3rd/googletest
 AC_ARG_WITH([gtest],
     [AS_HELP_STRING([--with-gtest],
-        [home path of the gtest, defaults to $home_3rd/gtest])],
+        [home path of the gtest, defaults to $GTEST_HOME])],
     [GTEST_HOME="$withval"],
-    [GTEST_HOME="$home_3rd/gtest"])
+    [GTEST_HOME="$GTEST_HOME"])
 AC_SUBST([GTEST_HOME])
 
 GTEST_CPPFLAGS=-I$GTEST_HOME/include

@@ -1,21 +1,19 @@
+// Copyright (c) 2010
+// All rights reserved.
+
 #include <memory>
 #include <cstring>
-
 #include "SeaUtil.hh"
 
-namespace sea
-{
+namespace sea {
 
-SEAUtil::SEAUtil()
-{
+SEAUtil::SEAUtil() {
 }
 
-SEAUtil::~SEAUtil()
-{
+SEAUtil::~SEAUtil() {
 }
 
-DepthMarketData* SEAUtil::toDepthMarketData(EESMarketDepthQuoteData *pData)
-{
+DepthMarketData* SEAUtil::toDepthMarketData(EESMarketDepthQuoteData *pData) {
   std::unique_ptr<DepthMarketData> theData( new DepthMarketData() );
 
   theData->TradingDay = pData->TradingDay;
@@ -28,7 +26,7 @@ DepthMarketData* SEAUtil::toDepthMarketData(EESMarketDepthQuoteData *pData)
   theData->PreOpenInterest = pData->PreOpenInterest;
   theData->OpenPrice = pData->OpenPrice;
   theData->HighestPrice = pData->HighestPrice;
-  theData->LowestPrice = pData->LowestPrice;  
+  theData->LowestPrice = pData->LowestPrice;
   theData->Volume = pData->LastPrice;
   theData->Turnover = pData->Turnover;
   theData->OpenInterest = pData->OpenInterest;
@@ -40,13 +38,12 @@ DepthMarketData* SEAUtil::toDepthMarketData(EESMarketDepthQuoteData *pData)
   theData->CurrDelta = pData->CurrDelta;
   theData->UpdateTime = pData->UpdateTime;
   theData->UpdateMillisec = pData->UpdateMillisec;
-  
+
   theData->BidPrice1 = pData->BidPrice1;
   theData->BidVolume1 = pData->BidVolume1;
   theData->AskPrice1 = pData->AskPrice1;
   theData->AskVolume1 = pData->AskVolume1;
-  
-  
+
   theData->BidPrice2 = pData->BidPrice2;
   theData->BidVolume2 = pData->BidVolume2;
   theData->AskPrice2 = pData->AskPrice2;
@@ -68,9 +65,8 @@ DepthMarketData* SEAUtil::toDepthMarketData(EESMarketDepthQuoteData *pData)
   theData->AskVolume5 = pData->AskVolume5;
 
   theData->AveragePrice = pData->AveragePrice;
-  
-  return theData.release();
 
+  return theData.release();
 }
 
-};
+}  // namespace sea

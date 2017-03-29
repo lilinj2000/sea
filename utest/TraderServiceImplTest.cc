@@ -3,55 +3,46 @@
 #include "service/SeaLog.hh"
 #include "service/TraderServiceImpl.hh"
 
-namespace sea
-{
+namespace sea {
 
-class TraderServiceImplTest : public ::testing::Test
-{
+class TraderServiceImplTest : public ::testing::Test {
  public:
-  TraderServiceImplTest()
-  {
+  TraderServiceImplTest() {
   }
   
-  void SetUp()
-  {
-    options_.reset( TraderService::createOptions() );
+  void SetUp() {
+    options_.reset(TraderService::createOptions());
 
-    std::auto_ptr<soil::Config> config( soil::Config::create() );
+    std::unique_ptr<soil::Config> config(soil::Config::create());
     config->configFile() = "trader.cfg";
-    config->registerOptions( options_.get() );
+    config->registerOptions(options_.get());
     config->loadConfig();
 
     SEA_LOG_INIT("log.cfg");
 
-    cond_.reset( soil::STimer::create() );
+    cond_.reset(soil::STimer::create());
 
-    service_.reset( TraderService::createService(options_.get(), NULL) );
-
+    service_.reset(TraderService::createService(options_.get(), nullptr));
   }
 
-  void TearDown()
-  {
+  void TearDown() {
   }
 
  protected:
-  std::auto_ptr<TraderService> service_;
+  std::unique_ptr<TraderService> service_;
   
-  std::auto_ptr<soil::Options> options_;
+  std::unique_ptr<soil::Options> options_;
   
-  std::auto_ptr<soil::STimer> cond_;
+  std::unique_ptr<soil::STimer> cond_;
 
 };
 
-TEST_F(TraderServiceImplTest, loginTest)
-{
+TEST_F(TraderServiceImplTest, loginTest) {
   ASSERT_TRUE( true );
 }
 
-TEST_F(TraderServiceImplTest, orderOpenBuyTest)
-{
-
-  std::string instru = "IF1510";
+TEST_F(TraderServiceImplTest, orderOpenBuyTest) {
+  std::string instru = "cu1705";
   double price = 2889;
   int volume = 1;
   
@@ -62,10 +53,8 @@ TEST_F(TraderServiceImplTest, orderOpenBuyTest)
   ASSERT_TRUE(true);
 }
 
-TEST_F(TraderServiceImplTest, orderOpenBuyFAKTest)
-{
-
-  std::string instru = "IF1510";
+TEST_F(TraderServiceImplTest, orderOpenBuyFAKTest) {
+  std::string instru = "cu1705";
   double price = 3000;
   int volume = 1;
   
@@ -76,10 +65,9 @@ TEST_F(TraderServiceImplTest, orderOpenBuyFAKTest)
   ASSERT_TRUE(true);
 }
 
-TEST_F(TraderServiceImplTest, orderOpenBuyFOKTest)
-{
+TEST_F(TraderServiceImplTest, orderOpenBuyFOKTest) {
 
-  std::string instru = "cu1602";
+  std::string instru = "cu1705";
   double price = 33210;
   int volume = 10;
   
@@ -90,9 +78,7 @@ TEST_F(TraderServiceImplTest, orderOpenBuyFOKTest)
   ASSERT_TRUE(true);
 }
 
-TEST_F(TraderServiceImplTest, orderOpenSellFOKTest)
-{
-
+TEST_F(TraderServiceImplTest, orderOpenSellFOKTest) {
   std::string instru = "cu1602";
   double price = 42820;
   int volume = 10;
@@ -104,8 +90,7 @@ TEST_F(TraderServiceImplTest, orderOpenSellFOKTest)
   ASSERT_TRUE(true);
 }
 
-TEST_F(TraderServiceImplTest, queryAccountTest)
-{
+TEST_F(TraderServiceImplTest, queryAccountTest) {
   service_->queryAccount();
 
   cond_->wait(2000);
@@ -113,4 +98,4 @@ TEST_F(TraderServiceImplTest, queryAccountTest)
   ASSERT_TRUE(true);
 }
 
-}; 
+}  // namespace sea
