@@ -1,0 +1,38 @@
+{
+    "log": {
+        "level": "trace", 
+        "sinks": [
+            {
+                "sink": {
+                    "level": "trace", 
+                    "type": "stdout_sink_mt"
+                }
+            }, 
+            {
+                "sink": {
+                    "file_name": "logs/trader.log", 
+                    "max_file_size": 5000000, 
+                    "max_files": 10, 
+                    "type": "rotating_file_sink_mt"
+                }
+            }
+        ]
+    }, 
+    "sea_trader": {
+        "account_id": "88991042", 
+        "exchange_id": 103, 
+        "mac_addr": "00:0F:53:35:BA:10", 
+        "password": "1", 
+        "prod_info": "tester", 
+        "qry_address": "172.31.0.27", 
+        "qry_port": 20001, 
+        "svr_address": "172.31.0.26", 
+        "svr_port": 20000, 
+        "user_id": "88991042d"
+    }, 
+    "test": {
+        "instru": "cu1712", 
+        "price": 35670, 
+        "volume": 10
+    }
+}

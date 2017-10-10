@@ -6,19 +6,24 @@
 #pragma  once 
 
 
+
+
 #ifndef _EES_TRADE_API_STRUCT_DEFINE_H_
 #define _EES_TRADE_API_STRUCT_DEFINE_H_
 
-#define SL_EES_API_VERSION    "1.0.1.21"				///<  api 协议版本号
+#include <string.h>
+
+
+#define SL_EES_API_VERSION    "2.0.1.34"				///<  api版本号
 
 typedef int RESULT;										///< 定义返回值 
 typedef int ERR_NO;										///< 定义错误值 
 
-typedef unsigned int  EES_ClientToken;					///< API端订单的客户端ID
-typedef int           EES_UserID;						///< 帐户ID
-typedef long long int EES_MarketToken;					///< 订单的市场 ID
-typedef int           EES_TradingDate;					///< 交易日
-typedef long long int EES_Nanosecond;					///< 从1970年1月1日0时0分0秒开始的纳秒时间，请使用ConvertFromTimestamp接口转换为可读的时间
+typedef unsigned int			EES_ClientToken;					///< API端订单的客户端ID
+typedef int						EES_UserID;						///< 帐户ID
+typedef long long int			EES_MarketToken;					///< 订单的市场 ID
+typedef int						EES_TradingDate;					///< 交易日
+typedef unsigned long long int	EES_Nanosecond;					///< 从1970年1月1日0时0分0秒开始的纳秒时间，请使用ConvertFromTimestamp接口转换为可读的时间
 
 typedef char    EES_Account[17];						///< 交易帐户
 typedef char    EES_ProductID[5];						///< 期货的产品类型
@@ -30,7 +35,7 @@ typedef	char	EES_RiskResultText[1024];				///< 风控检查错误描述
 typedef char    EES_GrammerResult[32];					///< 下单语法检查
 typedef char    EES_RiskResult[96];						///< 下单风控检查
                               
-typedef char    EES_Symbol[9];							///< 交易合约编码
+typedef char    EES_Symbol[20];							///< 交易合约编码
 typedef char    EES_SymbolName[21];						///< 交易合约名称
 
 typedef char    EES_MarketOrderId[25];                  ///< 交易所订单号
@@ -48,6 +53,9 @@ typedef unsigned char EES_SideType;						///< 买卖方向
 #define EES_SideType_force_close_ovn_long       8		///< =卖单 （强平昨）
 #define EES_SideType_force_close_today_short    9		///< =买单 （强平今）
 #define EES_SideType_force_close_today_long     10		///< =卖单 （强平今）
+#define EES_SideType_opt_exec					11		///< =期权行权
+
+
 
 typedef unsigned char EES_ExchangeID;					///< 交易所ID
 #define EES_ExchangeID_sh_cs                    100		///< =上交所
@@ -73,6 +81,11 @@ typedef unsigned char EES_ForceCloseType;				///< 强平原因
 #define EES_ForceCloseType_not_round_lot        4		///< =持仓非整数倍  
 #define EES_ForceCloseType_invalid              5		///< =违规
 #define EES_ForceCloseType_other                6		///< =其他
+
+typedef unsigned char EES_OptExecFlag;
+#define EES_OptExecFlag_normal					0		///< =常规行权
+#define EES_OptExecFlag_dont_auto_exec			1		///< =申请不自动执行
+#define EES_OptExecFlag_fut_hedge				2		///< =申请期货仓位自动对冲
 
 typedef unsigned char EES_OrderState;					///< 订单状态
 #define EES_OrderState_order_live               1		///< =单子活着
@@ -122,6 +135,18 @@ typedef unsigned char EES_HedgeFlag;					///< 投机套利标志
 #define EES_HedgeFlag_Speculation			2			///< 投机
 #define EES_HedgeFlag_Hedge					3			///< 套保
 
+typedef int EES_LogonResult;
+#define EES_LOGON_OK							0		///< 成功
+#define EES_LOGON_AUTHENTICATION_FAILED			1		///< 用户名/密码不对
+#define EES_LOGON_ACCOUNT_NOT_BOUND				2		///< 该用户未绑定任何资金账户
+#define EES_LOGON_ALREADY_LOGON					3		///< 如果系统配置为重复登录时，不允许后来的用户登录，那么就会返回这个值，目前一般不会这么配置，所以应该不会收到这个错误码
+#define EES_LOGON_ANOTHER_LOGON					4		///< 已经登录成功后，再次登录
+#define EES_LOGON_MISSING_EXTRA_INFO			5		///< 缺少客户端标识、mac地址
+#define EES_LOGON_INTERNAL_ERROR				6		///< 系统内部错误
+#define EES_LOGON_NOT_USING_QUERY_PORT			7		///< 使用新版本API不再会发生这个错误
+#define EES_LOGON_CONNECT_QUERY_PORT_FAILED		8		///< 连接查询通道失败
+#define EES_LOGON_SYSTEM_ENV_CRITICAL			99		///< 服务器目前环境恶劣，内存、硬盘等空间不足，所有登录都被禁止
+
 typedef int EES_ChangePasswordResult;
 #define EES_ChangePasswordResult_Success		0		///< 成功
 #define EES_ChangePasswordResult_OldPwdNotMatch	1		///< 老密码不对
@@ -135,10 +160,10 @@ typedef int EES_ChangePasswordResult;
 /// 登录返回的消息
 struct EES_LogonResponse
 {
-  int               m_Result;							///< 返回0表示登录成功，非0表示登录失败，失败时，不会返回UserId   0-  登录成功    1-  用户名/密码错误   2-  用户存在配置问题，如账户列表为空等      3- 不允许重复登录       5 - 缺失客户端产品信息、MAC地址等必要信息
-  EES_UserID        m_UserId;							///< 登录名对应的用户ID
-  unsigned int      m_TradingDate;						///< 交易日，格式为yyyyMMdd的int型值
-  EES_ClientToken   m_MaxToken;							///< 以前的最大 token 
+	EES_LogonResult		m_Result;							///< 参见本文档EES_LogonResult定义
+	EES_UserID			m_UserId;							///< 登录名对应的用户ID
+	unsigned int		m_TradingDate;						///< 交易日，格式为yyyyMMdd的int型值
+	EES_ClientToken		m_MaxToken;							///< 以前的最大 token 
 };
 
 
@@ -152,7 +177,7 @@ struct EES_EnterOrderField
 	EES_SecType         m_SecType;						///< 交易品种
 	double              m_Price;						///< 价格
 	unsigned int        m_Qty;							///< 数量
-	EES_ForceCloseType  m_ForceCloseReason;				///< 强平原因	
+	EES_OptExecFlag		m_OptExecFlag;					///< 期权行权标志位
 	EES_ClientToken		m_ClientOrderToken;				///< 整型，必须保证，这次比上次的值大，并不一定需要保证连续
 	EES_OrderTif		m_Tif;							///< 当需要下FAK/FOK报单时，需要设置为EES_OrderTif_IOC
 	unsigned int		m_MinQty;						///< 当需要下FAK/FOK报单时，该值=0：映射交易所的FAK-任意数量；
@@ -165,10 +190,12 @@ struct EES_EnterOrderField
 	EES_HedgeFlag		m_HedgeFlag;					///< 投机套利标志
 	EES_EnterOrderField()
 	{
+		memset(this, 0, sizeof(*this));
 		m_Tif = EES_OrderTif_Day;
 		m_MinQty = 0;
 		m_MarketSessionId = 0;
 		m_HedgeFlag = EES_HedgeFlag_Speculation;
+		m_SecType = EES_SecType_fut;
 	}
 
 };
@@ -188,7 +215,7 @@ struct EES_OrderAcceptField
 	EES_SecType         m_SecType;						///< 交易品种
 	double              m_Price;						///< 价格
 	unsigned int        m_Qty;							///< 数量
-	EES_ForceCloseType  m_ForceCloseReason;				///< 强平原因
+	EES_OptExecFlag		m_OptExecFlag;					///< 期权行权标志位
 	EES_OrderTif		m_Tif;							///< 用户下单时指定的值
 	unsigned int		m_MinQty;						///< 用户下单时指定的值
 	EES_CustomFieldType m_CustomField;					///< 用户下单时指定的值
@@ -273,7 +300,7 @@ struct EES_QueryAccountOrder
 	double				m_Price;						///< 价格
 	EES_Account			m_account;						///< 61 16  Alpha 客户帐号.  这个是传到交易所的客户帐号。验证后，必须是容许的值，也可能是这个连接的缺省值。
 	EES_ExchangeID		m_ExchengeID;					///< 100＝上交所  101=深交所  102=中金所  103=上期所  104=大商所  105=郑商所  255= done-away  See appendix 
-	EES_ForceCloseType	m_ForceCloseReason;				///< 强平原因： - 0=非强平  - 1=资金不足  - 2=客户超仓  - 3=会员超仓  - 4=持仓非整数倍  - 5=违规  - 6=其他
+	EES_OptExecFlag		m_OptExecFlag;					///< 期权行权标志位
 	EES_MarketToken		m_MarketOrderToken;				///< 盛立系统产生的单子号，和盛立交流时可用该号。 
 	EES_OrderStatus		m_OrderStatus;					///< 请参考EES_OrderStatus的定义
 	EES_Nanosecond		m_CloseTime;					///< 订单关闭事件，从1970年1月1日0时0分0秒开始的纳秒时间，请使用ConvertFromTimestamp接口转换为可读的时间
@@ -321,7 +348,7 @@ struct EES_AccountPosition
 {
 	EES_Account			m_actId;						///< Value  Notes
 	EES_Symbol			m_Symbol;						///< 合约名称/股票代码
-	EES_PosiDirection	m_PosiDirection;				///< 多空方向 2：多头 3：空头
+	EES_PosiDirection	m_PosiDirection;				///< 多空方向 1：多头 5：空头
 	unsigned int		m_InitOvnQty;					///< 隔夜仓初始数量，这个值不会变化，除非通过HelpDesk手工修改
 	unsigned int		m_OvnQty;						///< 当前隔夜仓数量，可以为0
 	unsigned int		m_FrozenOvnQty;					///< 冻结的昨仓数量
@@ -329,6 +356,28 @@ struct EES_AccountPosition
 	unsigned int		m_FrozenTodayQty;				///< 冻结的今仓数量
 	double				m_OvnMargin;					///< 隔夜仓占用保证金
 	double				m_TodayMargin;					///< 今仓占用的保证金
+	double				m_PositionCost;
+	EES_HedgeFlag		m_HedgeFlag;					///< 仓位对应的投机套利标志
+};
+
+struct EES_AccountOptionPosition
+{
+	EES_Account			m_actId;						///< Value  Notes
+	EES_Symbol			m_Symbol;						///< 合约名称/股票代码
+	EES_PosiDirection	m_PosiDirection;				///< 多空方向 1：多头 5：空头
+	EES_Symbol			m_UnderlyingSymbol;				
+	char				m_CallPut;
+	double				m_StrikePrice;
+	unsigned int		m_ExpireDate;
+	unsigned int		m_InitOvnQty;					///< 隔夜仓初始数量，这个值不会变化，除非通过HelpDesk手工修改		
+	unsigned int		m_CurTotalQty;
+	unsigned int		m_CoverLockedQty;
+	unsigned int		m_ExecPendingQty;
+	unsigned int		m_ExecAppliedQty;
+	unsigned int		m_CxlExecPendingQty;
+	double				m_LiquidPl;
+	double				m_AvgPrice;	
+	double				m_TotalCommissionFee;
 	EES_HedgeFlag		m_HedgeFlag;					///< 仓位对应的投机套利标志
 };
 
@@ -365,11 +414,14 @@ struct EES_SymbolField
 	double				m_PriceTick;					///< 最小变动价位 
 	unsigned int		m_CreateDate;					///< 创建日期
 	unsigned int		m_OpenDate;						///< 上市日期
-	unsigned int		m_ExpireDate;					///< 到期日
+	unsigned int		m_ExpireDate;					///< 到期日, 期权到期日也用该值
 	unsigned int		m_StartDelivDate;				///< 开始交割日
 	unsigned int		m_EndDelivDate;					///< 结束交割日
 	unsigned int		m_InstLifePhase;				///< 合约生命周期状态   0=未上市    1=上市    2=停牌    3=到齐
 	unsigned int		m_IsTrading;					///< 当前是否交易   0=未交易    1=交易
+	double				m_StrikePrice;					///< 期权合约的执行价, 期货该值为0
+	char				m_CallPut;						///< 期权是认沽还是认购
+	EES_Symbol			m_UnderlyingSymbol;				///< 期权标的物期货合约
 };
 
 /// 查询帐户的保证金率
@@ -422,7 +474,7 @@ struct EES_PostOrder
 	double				m_price;						///< 价格 
 	EES_Account			m_account;						///< 客户帐号.  这个是传到交易所的客户帐号。验证后，必须是容许的值，也可能是这个连接的缺省值。
 	EES_ExchangeID		m_ExchangeID;					///< 255=Done-away
-	EES_ForceCloseType  m_ForceCloseReason;				///< 不用，填６。   强平原因：    - 0=非强平    - 1=资金不足    - 2=客户超仓    - 3=会员超仓    - 4=持仓非整数倍    - 5=违规    - 6=其他
+	EES_OptExecFlag		m_OptExecFlag;					///< 期权行权标志位
 	EES_OrderState		m_OrderState;					///< 单子状态，绝大多时候是1，但是也有可能是2.    1=order live（单子活着）    2=order dead（单子死了）
 	EES_MarketOrderId	m_ExchangeOrderID;				///< 交易所单号，如果是人工被动单，该值为空白
 	EES_HedgeFlag		m_HedgeFlag;					///< 投机套利标志
@@ -455,6 +507,17 @@ struct EES_SymbolStatus
 	unsigned int	m_TradingSegmentSN;	///< 交易阶段编号
 	char			m_EnterTime[9];		///< 进入本状态时间
 	unsigned char	m_EnterReason;		///< 进入本状态原因: '1': 自动切换; '2': 手动切换; '3': 熔断; '4': 熔断手动;
+};
+
+struct EES_MarketMBLData
+{
+	unsigned int		m_RequestId;					///< 请求时所填的id
+	unsigned int		m_Result;						///< 0为正常返回，非0为出现错误
+	EES_Symbol			m_symbol;						///< 合约名称/股票代码	
+	EES_ExchangeID		m_ExchangeID;					///< 102=中金所   103=上期所    104=大商所    105=郑商所
+	double				m_Price;						///< 价格
+	int					m_Volume;						///< 数量
+	unsigned char		m_IsBid;						///< 1: 买方行情，0:卖方行情
 };
 
 #pragma pack(pop)

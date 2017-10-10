@@ -4,7 +4,7 @@
 #include "TraderSpiImpl.hh"
 #include "TraderServiceImpl.hh"
 #include "TraderOptions.hh"
-#include "SeaLog.hh"
+#include "soil/Log.hh"
 
 #include "EesTraderDefinePrint.hh"
 
@@ -13,23 +13,25 @@ namespace sea {
 TraderSpiImpl::TraderSpiImpl(
     TraderServiceImpl* service) :
     service_(service) {
-  SEA_TRACE <<"TraderSpiImpl::TraderSpiImpl()";
+  SOIL_FUNC_TRACE;
 }
 
 TraderSpiImpl::~TraderSpiImpl() {
-  SEA_TRACE <<"TraderSpiImpl::~TraderSpiImpl()";
+  SOIL_FUNC_TRACE;
 }
 
 /////////////////////////////////////////
 // impl from EESTraderEvent
 /////////////////////////////////////////
-void TraderSpiImpl::OnConnection(ERR_NO errNo,
-                                 const char* pErrStr) {
-  SEA_TRACE <<"TraderSpiImpl::OnConnection()";
+void TraderSpiImpl::OnConnection(
+    ERR_NO errNo,
+    const char* pErrStr) {
+  SOIL_FUNC_TRACE;
 
-  if (errNo != NO_ERROR) {
-    SEA_INFO <<"errNo: " <<errNo <<" ErrStr: " <<pErrStr;
-  } else {
+  SOIL_DEBUG_PRINT(errNo);
+  SOIL_DEBUG_IF_PRINT(pErrStr);
+
+  if (errNo == NO_ERROR) {
     service_->login();
   }
 }
@@ -37,159 +39,304 @@ void TraderSpiImpl::OnConnection(ERR_NO errNo,
 void TraderSpiImpl::OnDisConnection(
     ERR_NO errNo,
     const char* pErrStr) {
-  SEA_TRACE <<"TraderSpiImpl::OnDisconnection()";
+  SOIL_FUNC_TRACE;
 
-  if (errNo != NO_ERROR) {
-    SEA_INFO <<"errNo: " <<errNo <<" ErrStr: " <<pErrStr;
-  }
+  SOIL_DEBUG_PRINT(errNo);
+  SOIL_DEBUG_IF_PRINT(pErrStr);
 }
 
 void TraderSpiImpl::OnUserLogon(
     EES_LogonResponse* pLogon) {
-  SEA_TRACE <<"TraderSpiImpl::OnUserLogon()";
+  SOIL_FUNC_TRACE;
 
-  try {
-    SEA_PDU <<*pLogon;
+  SOIL_DEBUG_IF_PRINT(pLogon);
 
-    service_->initSession(pLogon);
-    service_->notify();
-  } catch (...) {
+  service_->initSession(pLogon);
+  service_->notify();
+}
+
+void TraderSpiImpl::OnRspChangePassword(
+    EES_ChangePasswordResult nResult) {
+  SOIL_FUNC_TRACE;
+
+  if (callback()) {
+    callback()->onRspChangePassword(
+        nResult);
+  }
+}
+
+void TraderSpiImpl::OnQueryUserAccount(
+    EES_AccountInfo* pAccoutnInfo,
+    bool bFinish) {
+  SOIL_FUNC_TRACE;
+
+  if (callback()) {
+    callback()->onQueryUserAccount(
+        pAccoutnInfo ? fmt::format("{}", *pAccoutnInfo) : "",
+        bFinish);
+  }
+}
+
+void TraderSpiImpl::OnQueryAccountPosition(
+    const char* pAccount,
+    EES_AccountPosition* pAccoutnPosition,
+    int nReqId,
+    bool bFinish) {
+  SOIL_FUNC_TRACE;
+
+  if (callback()) {
+    callback()->onQueryAccountPosition(
+        pAccount ? fmt::format("{}", *pAccount) : "",
+        pAccoutnPosition ? fmt::format("{}", *pAccoutnPosition) : "",
+        nReqId,
+        bFinish);
+  }
+}
+
+void TraderSpiImpl::OnQueryAccountOptionPosition(
+    const char* pAccount,
+    EES_AccountOptionPosition* pAccoutnOptionPosition,
+    int nReqId,
+    bool bFinish) {
+  SOIL_FUNC_TRACE;
+
+  if (callback()) {
+    callback()->onQueryAccountOptionPosition(
+        pAccount ? fmt::format("{}", *pAccount) : "",
+        pAccoutnOptionPosition ? fmt::format("{}", *pAccoutnOptionPosition) : "",
+        nReqId,
+        bFinish);
   }
 }
 
 void TraderSpiImpl::OnQueryAccountBP(
     const char* pAccount,
-    EES_AccountBP* pAccountPosition,
+    EES_AccountBP* pAccoutnPosition,
     int nReqId) {
-  SEA_TRACE <<"TraderSpiImpl::OnQueryAccountBP()";
+  SOIL_FUNC_TRACE;
 
-  SEA_INFO <<"pAccount: " <<pAccount
-           <<"  nReqId: " <<nReqId;
+  if (callback()) {
+    callback()->onQueryAccountBP(
+        pAccount ? fmt::format("{}", *pAccount) : "",
+        pAccoutnPosition ? fmt::format("{}", *pAccoutnPosition) : "",
+        nReqId);
+  }
+}
 
-  SEA_INFO <<*pAccountPosition;
+void TraderSpiImpl::OnQuerySymbol(
+    EES_SymbolField* pSymbol,
+    bool bFinish) {
+  SOIL_FUNC_TRACE;
+
+  if (callback()) {
+    callback()->onQuerySymbol(
+        pSymbol ? fmt::format("{}", *pSymbol) : "",
+        bFinish);
+  }
+}
+
+void TraderSpiImpl::OnQueryAccountTradeMargin(
+    const char* pAccount,
+    EES_AccountMargin* pSymbolMargin,
+    bool bFinish) {
+  SOIL_FUNC_TRACE;
+
+  if (callback()) {
+    callback()->onQueryAccountTradeMargin(
+        pAccount ? fmt::format("{}", *pAccount) : "",
+        pSymbolMargin ? fmt::format("{}", *pSymbolMargin) : "",
+        bFinish);
+  }
+}
+
+void TraderSpiImpl::OnQueryAccountTradeFee(
+    const char* pAccount,
+    EES_AccountFee* pSymbolFee,
+    bool bFinish) {
+  SOIL_FUNC_TRACE;
+
+  if (callback()) {
+    callback()->onQueryAccountTradeFee(
+        pAccount ? fmt::format("{}", *pAccount) : "",
+        pSymbolFee ? fmt::format("{}", *pSymbolFee) : "",
+        bFinish);
+  }
 }
 
 void TraderSpiImpl::OnOrderAccept(
     EES_OrderAcceptField* pAccept) {
-  SEA_TRACE <<"TraderSpiImpl::OnOrderAccept()";
+  SOIL_FUNC_TRACE;
 
-  SEA_INFO <<*pAccept;
-
-  if (service_->callback()) {
-    service_->callback()->onOrderAccept(
-        pAccept->m_ClientOrderToken,
-        pAccept->m_MarketOrderToken);
+  if (callback()) {
+    callback()->onOrderAccept(
+        pAccept ? fmt::format("{}", *pAccept) : "");
   }
 }
 
 void TraderSpiImpl::OnOrderMarketAccept(
     EES_OrderMarketAcceptField* pAccept) {
-  SEA_TRACE <<"TraderSpiImpl::OnOrderMarketAccept()";
+  SOIL_FUNC_TRACE;
 
-  SEA_INFO <<*pAccept;
-
-  if (service_->callback()) {
-    service_->callback()->onOrderMarketAccept(
-        pAccept->m_MarketOrderToken);
+  if (callback()) {
+    callback()->onOrderMarketAccept(
+        pAccept ? fmt::format("{}", *pAccept) : "");
   }
 }
 
 void TraderSpiImpl::OnOrderReject(
     EES_OrderRejectField* pReject) {
-  SEA_TRACE <<"TraderSpiImpl::OnOrderReject()";
+  SOIL_FUNC_TRACE;
 
-  SEA_INFO <<*pReject;
-
-  if (service_->callback()) {
-    service_->callback()->onOrderReject(pReject->m_ClientOrderToken);
+  if (callback()) {
+    callback()->onOrderReject(
+        pReject ? fmt::format("{}", *pReject) : "");
   }
 }
 
 void TraderSpiImpl::OnOrderMarketReject(
     EES_OrderMarketRejectField* pReject) {
-  SEA_TRACE <<"TraderSpiImpl::OnOrderMarketReject()";
+  SOIL_FUNC_TRACE;
 
-  SEA_INFO <<*pReject;
-
-  if (service_->callback()) {
-    service_->callback()->onOrderMarketReject(pReject->m_MarketOrderToken);
+  if (callback()) {
+    callback()->onOrderMarketReject(
+        pReject ? fmt::format("{}", *pReject) : "");
   }
 }
 
-void TraderSpiImpl::OnOrderExecution(EES_OrderExecutionField* pExec) {
-  SEA_TRACE <<"TraderSpiImpl::OnOrderExecution()";
+void TraderSpiImpl::OnOrderExecution(
+    EES_OrderExecutionField* pExec) {
+  SOIL_FUNC_TRACE;
 
-  SEA_INFO <<*pExec;
-
-  if (service_->callback()) {
-    service_->callback()->onOrderExecution(pExec->m_ClientOrderToken,
-                                           pExec->m_MarketOrderToken,
-                                           pExec->m_Quantity,
-                                           pExec->m_Price);
+  if (callback()) {
+    callback()->onOrderExecution(
+        pExec ? fmt::format("{}", *pExec) : "");
   }
 }
 
-void TraderSpiImpl::OnOrderCxled(EES_OrderCxled* pCxled) {
-  SEA_TRACE <<"TraderSpiImpl::OnOrderCxled()";
+void TraderSpiImpl::OnOrderCxled(
+    EES_OrderCxled* pCxled) {
+  SOIL_FUNC_TRACE;
 
-  SEA_INFO <<*pCxled;
-
-  if (service_->callback()) {
-    service_->callback()->onOrderCxled(pCxled->m_ClientOrderToken,
-                                       pCxled->m_MarketOrderToken,
-                                       pCxled->m_Decrement);
+  if (callback()) {
+    callback()->onOrderCxled(
+        pCxled ? fmt::format("{}", *pCxled) : "");
   }
 }
 
 void TraderSpiImpl::OnCxlOrderReject(
     EES_CxlOrderRej* pReject) {
-  SEA_TRACE <<"TraderSpiImpl::OnCxlOrderReject()";
+  SOIL_FUNC_TRACE;
 
-  SEA_INFO <<*pReject;
+  if (callback()) {
+    callback()->onCxlOrderReject(
+        pReject ? fmt::format("{}", *pReject) : "");
+  }
+}
 
-  if (service_->callback()) {
-    service_->callback()->onCxlOrderReject(pReject->m_MarketOrderToken);
+void TraderSpiImpl::OnQueryTradeOrder(
+    const char* pAccount,
+    EES_QueryAccountOrder* pQueryOrder,
+    bool bFinish) {
+  SOIL_FUNC_TRACE;
+
+  if (callback()) {
+    callback()->onQueryTradeOrder(
+        pAccount ? fmt::format("{}", *pAccount) : "",
+        pQueryOrder ? fmt::format("{}", *pQueryOrder) : "",
+        bFinish);
+  }
+}
+
+void TraderSpiImpl::OnQueryTradeOrderExec(
+    const char* pAccount,
+    EES_QueryOrderExecution* pQueryOrderExec,
+    bool bFinish) {
+  SOIL_FUNC_TRACE;
+
+  if (callback()) {
+    callback()->onQueryTradeOrderExec(
+        pAccount ? fmt::format("{}", *pAccount) : "",
+        pQueryOrderExec ? fmt::format("{}", *pQueryOrderExec) : "",
+        bFinish);
   }
 }
 
 void TraderSpiImpl::OnPostOrder(
     EES_PostOrder* pPostOrder) {
-  SEA_TRACE <<"TraderSpiImpl::OnPostOrder()";
+  SOIL_FUNC_TRACE;
 
-  SEA_INFO <<*pPostOrder;
+  if (callback()) {
+    callback()->onPostOrder(
+        pPostOrder ? fmt::format("{}", *pPostOrder) : "");
+  }
 }
 
 void TraderSpiImpl::OnPostOrderExecution(
     EES_PostOrderExecution* pPostOrderExecution) {
-  SEA_TRACE <<"TraderSpiImpl::OnPostOrderExecution()";
+  SOIL_FUNC_TRACE;
 
-  SEA_INFO <<*pPostOrderExecution;
+  if (callback()) {
+    callback()->onPostOrderExecution(
+        pPostOrderExecution ? fmt::format("{}", *pPostOrderExecution) : "");
+  }
+}
+
+void TraderSpiImpl::OnQueryMarketSession(
+    EES_ExchangeMarketSession* pMarketSession,
+    bool bFinish) {
+  SOIL_FUNC_TRACE;
+
+  if (callback()) {
+    callback()->onQueryMarketSession(
+        pMarketSession ? fmt::format("{}", *pMarketSession) : "",
+        bFinish);
+  }
 }
 
 void TraderSpiImpl::OnMarketSessionStatReport(
     EES_MarketSessionId MarketSessionId,
     bool ConnectionGood) {
-  SEA_TRACE <<"TraderSpiImpl::OnMarketSessionStatReport()";
+  SOIL_FUNC_TRACE;
 
-  SEA_INFO <<"market_sessionid: " <<MarketSessionId
-           <<"connection_good: " <<std::boolalpha <<ConnectionGood;
+  if (callback()) {
+    callback()->onMarketSessionStatReport(
+        MarketSessionId,
+        ConnectionGood);
+  }
 }
 
-void TraderSpiImpl::OnSymbolStatusReport(EES_SymbolStatus* pSymbolStatus) {
-  SEA_TRACE <<"TraderSpiImpl::OnSymbolStatusReport()";
+void TraderSpiImpl::OnSymbolStatusReport(
+    EES_SymbolStatus* pSymbolStatus) {
+  SOIL_FUNC_TRACE;
 
-  SEA_INFO <<*pSymbolStatus;
+  if (callback()) {
+    callback()->onSymbolStatusReport(
+        pSymbolStatus ? fmt::format("{}", *pSymbolStatus) : "");
+  }
 }
 
 void TraderSpiImpl::OnQuerySymbolStatus(
     EES_SymbolStatus* pSymbolStatus,
     bool bFinish) {
-  SEA_TRACE <<"TraderSpiImpl::OnQuerySymbolStatus()";
+  SOIL_FUNC_TRACE;
 
-  if (!bFinish) {
-    SEA_INFO <<*pSymbolStatus;
+  if (callback()) {
+    callback()->onQuerySymbolStatus(
+        pSymbolStatus ? fmt::format("{}", *pSymbolStatus) : "",
+        bFinish);
   }
 }
 
+void TraderSpiImpl::OnQueryMarketMBLData(
+    EES_MarketMBLData* pMarketMBLData,
+    bool bFinish) {
+  SOIL_FUNC_TRACE;
+
+  if (callback()) {
+    callback()->onQueryMarketMBLData(
+        pMarketMBLData ? fmt::format("{}", *pMarketMBLData) : "",
+        bFinish);
+  }
+}
 
 }  // namespace sea

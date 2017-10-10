@@ -10,47 +10,37 @@
 
 #include "sea/TraderService.hh"
 #include "EesTraderApi.h"
-
 #include "soil/STimer.hh"
+#include "soil/json.hh"
 
 namespace sea {
 
 class TraderOptions;
 class TraderSpiImpl;
 
-class TraderServiceImpl : public TraderService {
+class TraderServiceImpl :
+      public TraderService {
  public:
-  TraderServiceImpl(soil::Options* options, TraderServiceCallback* callback);
+  TraderServiceImpl(
+      const rapidjson::Document& doc,
+      TraderCallback* callback);
 
   virtual ~TraderServiceImpl();
 
-  virtual std::string tradingDay();
+  virtual int32_t openBuyOrder(
+      const std::string& instru,
+      double price,
+      int volume);
 
-  virtual int orderOpenBuy(const std::string& instru,
-                           double price, int volume);
+  virtual int32_t openBuyOrderFAK(
+      const std::string& instru,
+      double price,
+      int volume);
 
-  virtual int orderOpenBuyFAK(const std::string& instru,
-                              double price, int volume);
-
-  virtual int orderOpenBuyFOK(const std::string& instru,
-                              double price, int volume);
-
-  virtual int orderOpenSell(const std::string& instru,
-                            double price, int volume);
-
-  virtual int orderOpenSellFAK(const std::string& instru,
-                              double price, int volume);
-
-  virtual int orderOpenSellFOK(const std::string& instru,
-                              double price, int volume);
-
-  virtual int orderCloseBuy(const std::string& instru,
-                            double price, int volume);
-
-  virtual int orderCloseSell(const std::string& instru,
-                            double price, int volume);
-
-  virtual int queryAccount();
+  virtual int32_t openBuyOrderFOK(
+      const std::string& instru,
+      double price,
+      int volume);
 
   void login();
 
@@ -60,29 +50,30 @@ class TraderServiceImpl : public TraderService {
 
   void notify();
 
-  TraderServiceCallback* callback() { return callback_; }
-
-  TraderOptions* options() { return options_; }
+  TraderCallback* callback() {
+    return callback_;
+  }
 
  protected:
-  EES_EnterOrderField* orderField();
+  std::shared_ptr<EES_EnterOrderField> orderField(
+      const std::string& instru,
+      double price,
+      int volume);
 
   void orderGo(EES_EnterOrderField* req);
 
  private:
-  TraderOptions* options_;
-
-  EESTraderApi* trader_api_;
+  std::unique_ptr<TraderOptions> options_;
 
   std::unique_ptr<TraderSpiImpl> trader_spi_;
 
-  TraderServiceCallback* callback_;
+  EESTraderApi* trader_api_;
+
+  TraderCallback* callback_;
 
   std::atomic_int request_id_;
 
   std::unique_ptr<soil::STimer> cond_;
-
-  std::string trading_day_;
 };
 
 };  // namespace sea

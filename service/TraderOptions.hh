@@ -5,17 +5,14 @@
 #define SEA_TRADER_OPTIONS_HH
 
 #include <string>
-#include "soil/Config.hh"
+#include "soil/json.hh"
 
 namespace sea {
-namespace po = boost::program_options;
 
-class TraderOptions : public soil::Options {
+class TraderOptions {
  public:
-  TraderOptions();
-  virtual ~TraderOptions();
-
-  virtual po::options_description* configOptions();
+  explicit TraderOptions(
+      const rapidjson::Document& doc);
 
   std::string svr_address;
   int svr_port;
@@ -32,9 +29,6 @@ class TraderOptions : public soil::Options {
   std::string account_id;
 
   unsigned int exchange_id;
-
- private:
-  boost::program_options::options_description options_;
 };
 
 }  // namespace sea

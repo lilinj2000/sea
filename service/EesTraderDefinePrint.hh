@@ -1,436 +1,1340 @@
+// Copyright (c) 2010
+// All rights reserved.
+
 #ifndef EES_TRADER_DEFINE_PRINT_HH
 #define EES_TRADER_DEFINE_PRINT_HH
 
 #include <ostream>
 #include "EesTraderDefine.h"
+#include "soil/json.hh"
 
-template< typename CharT, typename TraitsT >
-std::basic_ostream< CharT, TraitsT >& operator<<(std::basic_ostream< CharT, TraitsT >& os, EES_LogonResponse const& aLogonResponse)
-{
-    os <<std::endl;
-    os <<"{" <<std::endl;
-    os <<"    \"EES_LogonResponse\": {" <<std::endl;
-    os <<"        \"m_Result\": \"" <<aLogonResponse.m_Result  <<"\"," <<std::endl;
-    os <<"        \"m_UserId\": \"" <<aLogonResponse.m_UserId  <<"\"," <<std::endl;
-    os <<"        \"m_TradingDate\": \"" <<aLogonResponse.m_TradingDate  <<"\"," <<std::endl;
-    os <<"        \"m_MaxToken\": \"" <<aLogonResponse.m_MaxToken  <<"\"" <<std::endl;
-    os <<"    }" <<std::endl;
-    os <<"}" <<std::endl;
+using rapidjson::StringBuffer;
+using rapidjson::PrettyWriter;
+using soil::json::write_value;
+
+inline std::ostream& operator<<(
+    std::ostream& os,
+    EES_LogonResponse const& aLogonResponse) {  // NOLINT
+    StringBuffer sb;
+    PrettyWriter<StringBuffer> writer(sb);
+
+    writer.StartObject();
+    writer.Key("EES_LogonResponse");
+        writer.StartObject();
+        writer.Key("m_Result");
+        write_value(
+            &writer,
+            aLogonResponse.m_Result);
+        writer.Key("m_UserId");
+        write_value(
+            &writer,
+            aLogonResponse.m_UserId);
+        writer.Key("m_TradingDate");
+        write_value(
+            &writer,
+            aLogonResponse.m_TradingDate);
+        writer.Key("m_MaxToken");
+        write_value(
+            &writer,
+            aLogonResponse.m_MaxToken);
+        writer.EndObject();
+    writer.EndObject();
+
+    os <<sb.GetString();
+
+    return os;
 }
 
-template< typename CharT, typename TraitsT >
-std::basic_ostream< CharT, TraitsT >& operator<<(std::basic_ostream< CharT, TraitsT >& os, EES_EnterOrderField const& aEnterOrderField)
-{
-    os <<std::endl;
-    os <<"{" <<std::endl;
-    os <<"    \"EES_EnterOrderField\": {" <<std::endl;
-    os <<"        \"m_Account\": \"" <<aEnterOrderField.m_Account  <<"\"," <<std::endl;
-    os <<"        \"m_Side\": \"" <<aEnterOrderField.m_Side  <<"\"," <<std::endl;
-    os <<"        \"m_Exchange\": \"" <<aEnterOrderField.m_Exchange  <<"\"," <<std::endl;
-    os <<"        \"m_Symbol\": \"" <<aEnterOrderField.m_Symbol  <<"\"," <<std::endl;
-    os <<"        \"m_SecType\": \"" <<aEnterOrderField.m_SecType  <<"\"," <<std::endl;
-    os <<"        \"m_Price\": \"" <<aEnterOrderField.m_Price  <<"\"," <<std::endl;
-    os <<"        \"m_Qty\": \"" <<aEnterOrderField.m_Qty  <<"\"," <<std::endl;
-    os <<"        \"m_ForceCloseReason\": \"" <<aEnterOrderField.m_ForceCloseReason  <<"\"," <<std::endl;
-    os <<"        \"m_ClientOrderToken\": \"" <<aEnterOrderField.m_ClientOrderToken  <<"\"," <<std::endl;
-    os <<"        \"m_Tif\": \"" <<aEnterOrderField.m_Tif  <<"\"," <<std::endl;
-    os <<"        \"m_MinQty\": \"" <<aEnterOrderField.m_MinQty  <<"\"," <<std::endl;
-    os <<"        \"m_CustomField\": \"" <<aEnterOrderField.m_CustomField  <<"\"," <<std::endl;
-    os <<"        \"m_MarketSessionId\": \"" <<aEnterOrderField.m_MarketSessionId  <<"\"," <<std::endl;
-    os <<"        \"m_HedgeFlag\": \"" <<aEnterOrderField.m_HedgeFlag <<"\"" <<std::endl;
-    os <<"    }" <<std::endl;
-    os <<"}" <<std::endl;
+inline std::ostream& operator<<(
+    std::ostream& os,
+    EES_EnterOrderField const& aEnterOrderField) {  // NOLINT
+    StringBuffer sb;
+    PrettyWriter<StringBuffer> writer(sb);
+
+    writer.StartObject();
+    writer.Key("EES_EnterOrderField");
+        writer.StartObject();
+        writer.Key("m_Account");
+        write_value(
+            &writer,
+            aEnterOrderField.m_Account);
+        writer.Key("m_Side");
+        write_value(
+            &writer,
+            aEnterOrderField.m_Side);
+        writer.Key("m_Exchange");
+        write_value(
+            &writer,
+            aEnterOrderField.m_Exchange);
+        writer.Key("m_Symbol");
+        write_value(
+            &writer,
+            aEnterOrderField.m_Symbol);
+        writer.Key("m_SecType");
+        write_value(
+            &writer,
+            aEnterOrderField.m_SecType);
+        writer.Key("m_Price");
+        write_value(
+            &writer,
+            aEnterOrderField.m_Price);
+        writer.Key("m_Qty");
+        write_value(
+            &writer,
+            aEnterOrderField.m_Qty);
+        writer.Key("m_OptExecFlag");
+        write_value(
+            &writer,
+            aEnterOrderField.m_OptExecFlag);
+        writer.Key("m_ClientOrderToken");
+        write_value(
+            &writer,
+            aEnterOrderField.m_ClientOrderToken);
+        writer.Key("m_Tif");
+        write_value(
+            &writer,
+            aEnterOrderField.m_Tif);
+        writer.Key("m_MinQty");
+        write_value(
+            &writer,
+            aEnterOrderField.m_MinQty);
+        writer.Key("m_CustomField");
+        write_value(
+            &writer,
+            aEnterOrderField.m_CustomField);
+        writer.Key("m_MarketSessionId");
+        write_value(
+            &writer,
+            aEnterOrderField.m_MarketSessionId);
+        writer.Key("m_HedgeFlag");
+        write_value(
+            &writer,
+            aEnterOrderField.m_HedgeFlag);
+        writer.EndObject();
+    writer.EndObject();
+
+    os <<sb.GetString();
+
+    return os;
 }
 
-template< typename CharT, typename TraitsT >
-std::basic_ostream< CharT, TraitsT >& operator<<(std::basic_ostream< CharT, TraitsT >& os, EES_OrderAcceptField const& aOrderAcceptField)
-{
-    os <<std::endl;
-    os <<"{" <<std::endl;
-    os <<"    \"EES_OrderAcceptField\": {" <<std::endl;
-    os <<"        \"m_ClientOrderToken\": \"" <<aOrderAcceptField.m_ClientOrderToken  <<"\"," <<std::endl;
-    os <<"        \"m_MarketOrderToken\": \"" <<aOrderAcceptField.m_MarketOrderToken  <<"\"," <<std::endl;
-    os <<"        \"m_OrderState\": \"" <<aOrderAcceptField.m_OrderState  <<"\"," <<std::endl;
-    os <<"        \"m_UserID\": \"" <<aOrderAcceptField.m_UserID  <<"\"," <<std::endl;
-    os <<"        \"m_AcceptTime\": \"" <<aOrderAcceptField.m_AcceptTime  <<"\"," <<std::endl;
-    os <<"        \"m_Account\": \"" <<aOrderAcceptField.m_Account  <<"\"," <<std::endl;
-    os <<"        \"m_Side\": \"" <<aOrderAcceptField.m_Side  <<"\"," <<std::endl;
-    os <<"        \"m_Exchange\": \"" <<aOrderAcceptField.m_Exchange  <<"\"," <<std::endl;
-    os <<"        \"m_Symbol\": \"" <<aOrderAcceptField.m_Symbol  <<"\"," <<std::endl;
-    os <<"        \"m_SecType\": \"" <<aOrderAcceptField.m_SecType  <<"\"," <<std::endl;
-    os <<"        \"m_Price\": \"" <<aOrderAcceptField.m_Price  <<"\"," <<std::endl;
-    os <<"        \"m_Qty\": \"" <<aOrderAcceptField.m_Qty  <<"\"," <<std::endl;
-    os <<"        \"m_ForceCloseReason\": \"" <<aOrderAcceptField.m_ForceCloseReason  <<"\"," <<std::endl;
-    os <<"        \"m_Tif\": \"" <<aOrderAcceptField.m_Tif  <<"\"," <<std::endl;
-    os <<"        \"m_MinQty\": \"" <<aOrderAcceptField.m_MinQty  <<"\"," <<std::endl;
-    os <<"        \"m_CustomField\": \"" <<aOrderAcceptField.m_CustomField  <<"\"," <<std::endl;
-    os <<"        \"m_MarketSessionId\": \"" <<aOrderAcceptField.m_MarketSessionId  <<"\"," <<std::endl;
-    os <<"        \"m_HedgeFlag\": \"" <<aOrderAcceptField.m_HedgeFlag  <<"\"" <<std::endl;
-    os <<"    }" <<std::endl;
-    os <<"}" <<std::endl;
+inline std::ostream& operator<<(
+    std::ostream& os,
+    EES_OrderAcceptField const& aOrderAcceptField) {  // NOLINT
+    StringBuffer sb;
+    PrettyWriter<StringBuffer> writer(sb);
+
+    writer.StartObject();
+    writer.Key("EES_OrderAcceptField");
+        writer.StartObject();
+        writer.Key("m_ClientOrderToken");
+        write_value(
+            &writer,
+            aOrderAcceptField.m_ClientOrderToken);
+        writer.Key("m_MarketOrderToken");
+        write_value(
+            &writer,
+            aOrderAcceptField.m_MarketOrderToken);
+        writer.Key("m_OrderState");
+        write_value(
+            &writer,
+            aOrderAcceptField.m_OrderState);
+        writer.Key("m_UserID");
+        write_value(
+            &writer,
+            aOrderAcceptField.m_UserID);
+        writer.Key("m_AcceptTime");
+        write_value(
+            &writer,
+            aOrderAcceptField.m_AcceptTime);
+        writer.Key("m_Account");
+        write_value(
+            &writer,
+            aOrderAcceptField.m_Account);
+        writer.Key("m_Side");
+        write_value(
+            &writer,
+            aOrderAcceptField.m_Side);
+        writer.Key("m_Exchange");
+        write_value(
+            &writer,
+            aOrderAcceptField.m_Exchange);
+        writer.Key("m_Symbol");
+        write_value(
+            &writer,
+            aOrderAcceptField.m_Symbol);
+        writer.Key("m_SecType");
+        write_value(
+            &writer,
+            aOrderAcceptField.m_SecType);
+        writer.Key("m_Price");
+        write_value(
+            &writer,
+            aOrderAcceptField.m_Price);
+        writer.Key("m_Qty");
+        write_value(
+            &writer,
+            aOrderAcceptField.m_Qty);
+        writer.Key("m_OptExecFlag");
+        write_value(
+            &writer,
+            aOrderAcceptField.m_OptExecFlag);
+        writer.Key("m_Tif");
+        write_value(
+            &writer,
+            aOrderAcceptField.m_Tif);
+        writer.Key("m_MinQty");
+        write_value(
+            &writer,
+            aOrderAcceptField.m_MinQty);
+        writer.Key("m_CustomField");
+        write_value(
+            &writer,
+            aOrderAcceptField.m_CustomField);
+        writer.Key("m_MarketSessionId");
+        write_value(
+            &writer,
+            aOrderAcceptField.m_MarketSessionId);
+        writer.Key("m_HedgeFlag");
+        write_value(
+            &writer,
+            aOrderAcceptField.m_HedgeFlag);
+        writer.EndObject();
+    writer.EndObject();
+
+    os <<sb.GetString();
+
+    return os;
 }
 
-template< typename CharT, typename TraitsT >
-std::basic_ostream< CharT, TraitsT >& operator<<(std::basic_ostream< CharT, TraitsT >& os, EES_OrderMarketAcceptField const& aOrderMarketAcceptField)
-{
-    os <<std::endl;
-    os <<"{" <<std::endl;
-    os <<"    \"EES_OrderMarketAcceptField\": {" <<std::endl;
-    os <<"        \"m_Account\": \"" <<aOrderMarketAcceptField.m_Account  <<"\"," <<std::endl;
-    os <<"        \"m_MarketOrderToken\": \"" <<aOrderMarketAcceptField.m_MarketOrderToken  <<"\"," <<std::endl;
-    os <<"        \"m_MarketOrderId\": \"" <<aOrderMarketAcceptField.m_MarketOrderId  <<"\"," <<std::endl;
-    os <<"        \"m_MarketTime\": \"" <<aOrderMarketAcceptField.m_MarketTime  <<"\"" <<std::endl;
-    os <<"    }" <<std::endl;
-    os <<"}" <<std::endl;
+inline std::ostream& operator<<(
+    std::ostream& os,
+    EES_OrderMarketAcceptField const& aOrderMarketAcceptField) {  // NOLINT
+    StringBuffer sb;
+    PrettyWriter<StringBuffer> writer(sb);
+
+    writer.StartObject();
+    writer.Key("EES_OrderMarketAcceptField");
+        writer.StartObject();
+        writer.Key("m_Account");
+        write_value(
+            &writer,
+            aOrderMarketAcceptField.m_Account);
+        writer.Key("m_MarketOrderToken");
+        write_value(
+            &writer,
+            aOrderMarketAcceptField.m_MarketOrderToken);
+        writer.Key("m_MarketOrderId");
+        write_value(
+            &writer,
+            aOrderMarketAcceptField.m_MarketOrderId);
+        writer.Key("m_MarketTime");
+        write_value(
+            &writer,
+            aOrderMarketAcceptField.m_MarketTime);
+        writer.EndObject();
+    writer.EndObject();
+
+    os <<sb.GetString();
+
+    return os;
 }
 
-template< typename CharT, typename TraitsT >
-std::basic_ostream< CharT, TraitsT >& operator<<(std::basic_ostream< CharT, TraitsT >& os, EES_OrderRejectField const& aOrderRejectField)
-{
-    os <<std::endl;
-    os <<"{" <<std::endl;
-    os <<"    \"EES_OrderRejectField\": {" <<std::endl;
-    os <<"        \"m_Userid\": \"" <<aOrderRejectField.m_Userid  <<"\"," <<std::endl;
-    os <<"        \"m_Timestamp\": \"" <<aOrderRejectField.m_Timestamp  <<"\"," <<std::endl;
-    os <<"        \"m_ClientOrderToken\": \"" <<aOrderRejectField.m_ClientOrderToken  <<"\"," <<std::endl;
-    os <<"        \"m_RejectedMan\": \"" <<aOrderRejectField.m_RejectedMan  <<"\"," <<std::endl;
-    os <<"        \"m_ReasonCode\": \"" <<aOrderRejectField.m_ReasonCode  <<"\"," <<std::endl;
-    os <<"        \"m_GrammerResult\": \"" <<aOrderRejectField.m_GrammerResult  <<"\"," <<std::endl;
-    os <<"        \"m_RiskResult\": \"" <<aOrderRejectField.m_RiskResult  <<"\"," <<std::endl;
-    os <<"        \"m_GrammerText\": \"" <<aOrderRejectField.m_GrammerText  <<"\"," <<std::endl;
-    os <<"        \"m_RiskText\": \"" <<aOrderRejectField.m_RiskText  <<"\"" <<std::endl;
-    os <<"    }" <<std::endl;
-    os <<"}" <<std::endl;
+inline std::ostream& operator<<(
+    std::ostream& os,
+    EES_OrderRejectField const& aOrderRejectField) {  // NOLINT
+    StringBuffer sb;
+    PrettyWriter<StringBuffer> writer(sb);
+
+    writer.StartObject();
+    writer.Key("EES_OrderRejectField");
+        writer.StartObject();
+        writer.Key("m_Userid");
+        write_value(
+            &writer,
+            aOrderRejectField.m_Userid);
+        writer.Key("m_Timestamp");
+        write_value(
+            &writer,
+            aOrderRejectField.m_Timestamp);
+        writer.Key("m_ClientOrderToken");
+        write_value(
+            &writer,
+            aOrderRejectField.m_ClientOrderToken);
+        writer.Key("m_RejectedMan");
+        write_value(
+            &writer,
+            aOrderRejectField.m_RejectedMan);
+        writer.Key("m_ReasonCode");
+        write_value(
+            &writer,
+            aOrderRejectField.m_ReasonCode);
+        writer.Key("m_GrammerResult");
+        write_value(
+            &writer,
+            aOrderRejectField.m_GrammerResult);
+        writer.Key("m_RiskResult");
+        write_value(
+            &writer,
+            aOrderRejectField.m_RiskResult);
+        writer.Key("m_GrammerText");
+        write_value(
+            &writer,
+            aOrderRejectField.m_GrammerText);
+        writer.Key("m_RiskText");
+        write_value(
+            &writer,
+            aOrderRejectField.m_RiskText);
+        writer.EndObject();
+    writer.EndObject();
+
+    os <<sb.GetString();
+
+    return os;
 }
 
-template< typename CharT, typename TraitsT >
-std::basic_ostream< CharT, TraitsT >& operator<<(std::basic_ostream< CharT, TraitsT >& os, EES_OrderMarketRejectField const& aOrderMarketRejectField)
-{
-    os <<std::endl;
-    os <<"{" <<std::endl;
-    os <<"    \"EES_OrderMarketRejectField\": {" <<std::endl;
-    os <<"        \"m_Account\": \"" <<aOrderMarketRejectField.m_Account  <<"\"," <<std::endl;
-    os <<"        \"m_MarketOrderToken\": \"" <<aOrderMarketRejectField.m_MarketOrderToken  <<"\"," <<std::endl;
-    os <<"        \"m_MarketTimestamp\": \"" <<aOrderMarketRejectField.m_MarketTimestamp  <<"\"," <<std::endl;
-    os <<"        \"m_ReasonText\": \"" <<aOrderMarketRejectField.m_ReasonText  <<"\"" <<std::endl;
-    os <<"    }" <<std::endl;
-    os <<"}" <<std::endl;
+inline std::ostream& operator<<(
+    std::ostream& os,
+    EES_OrderMarketRejectField const& aOrderMarketRejectField) {  // NOLINT
+    StringBuffer sb;
+    PrettyWriter<StringBuffer> writer(sb);
+
+    writer.StartObject();
+    writer.Key("EES_OrderMarketRejectField");
+        writer.StartObject();
+        writer.Key("m_Account");
+        write_value(
+            &writer,
+            aOrderMarketRejectField.m_Account);
+        writer.Key("m_MarketOrderToken");
+        write_value(
+            &writer,
+            aOrderMarketRejectField.m_MarketOrderToken);
+        writer.Key("m_MarketTimestamp");
+        write_value(
+            &writer,
+            aOrderMarketRejectField.m_MarketTimestamp);
+        writer.Key("m_ReasonText");
+        write_value(
+            &writer,
+            aOrderMarketRejectField.m_ReasonText);
+        writer.EndObject();
+    writer.EndObject();
+
+    os <<sb.GetString();
+
+    return os;
 }
 
-template< typename CharT, typename TraitsT >
-std::basic_ostream< CharT, TraitsT >& operator<<(std::basic_ostream< CharT, TraitsT >& os, EES_OrderExecutionField const& aOrderExecutionField)
-{
-    os <<std::endl;
-    os <<"{" <<std::endl;
-    os <<"    \"EES_OrderExecutionField\": {" <<std::endl;
-    os <<"        \"m_Userid\": \"" <<aOrderExecutionField.m_Userid  <<"\"," <<std::endl;
-    os <<"        \"m_Timestamp\": \"" <<aOrderExecutionField.m_Timestamp  <<"\"," <<std::endl;
-    os <<"        \"m_ClientOrderToken\": \"" <<aOrderExecutionField.m_ClientOrderToken  <<"\"," <<std::endl;
-    os <<"        \"m_MarketOrderToken\": \"" <<aOrderExecutionField.m_MarketOrderToken  <<"\"," <<std::endl;
-    os <<"        \"m_Quantity\": \"" <<aOrderExecutionField.m_Quantity  <<"\"," <<std::endl;
-    os <<"        \"m_Price\": \"" <<aOrderExecutionField.m_Price  <<"\"," <<std::endl;
-    os <<"        \"m_ExecutionID\": \"" <<aOrderExecutionField.m_ExecutionID  <<"\"," <<std::endl;
-    os <<"        \"m_MarketExecID\": \"" <<aOrderExecutionField.m_MarketExecID  <<"\"" <<std::endl;
-    os <<"    }" <<std::endl;
-    os <<"}" <<std::endl;
+inline std::ostream& operator<<(
+    std::ostream& os,
+    EES_OrderExecutionField const& aOrderExecutionField) {  // NOLINT
+    StringBuffer sb;
+    PrettyWriter<StringBuffer> writer(sb);
+
+    writer.StartObject();
+    writer.Key("EES_OrderExecutionField");
+        writer.StartObject();
+        writer.Key("m_Userid");
+        write_value(
+            &writer,
+            aOrderExecutionField.m_Userid);
+        writer.Key("m_Timestamp");
+        write_value(
+            &writer,
+            aOrderExecutionField.m_Timestamp);
+        writer.Key("m_ClientOrderToken");
+        write_value(
+            &writer,
+            aOrderExecutionField.m_ClientOrderToken);
+        writer.Key("m_MarketOrderToken");
+        write_value(
+            &writer,
+            aOrderExecutionField.m_MarketOrderToken);
+        writer.Key("m_Quantity");
+        write_value(
+            &writer,
+            aOrderExecutionField.m_Quantity);
+        writer.Key("m_Price");
+        write_value(
+            &writer,
+            aOrderExecutionField.m_Price);
+        writer.Key("m_ExecutionID");
+        write_value(
+            &writer,
+            aOrderExecutionField.m_ExecutionID);
+        writer.Key("m_MarketExecID");
+        write_value(
+            &writer,
+            aOrderExecutionField.m_MarketExecID);
+        writer.EndObject();
+    writer.EndObject();
+
+    os <<sb.GetString();
+
+    return os;
 }
 
-template< typename CharT, typename TraitsT >
-std::basic_ostream< CharT, TraitsT >& operator<<(std::basic_ostream< CharT, TraitsT >& os, EES_CancelOrder const& aCancelOrder)
-{
-    os <<std::endl;
-    os <<"{" <<std::endl;
-    os <<"    \"EES_CancelOrder\": {" <<std::endl;
-    os <<"        \"m_MarketOrderToken\": \"" <<aCancelOrder.m_MarketOrderToken  <<"\"," <<std::endl;
-    os <<"        \"m_Quantity\": \"" <<aCancelOrder.m_Quantity  <<"\"," <<std::endl;
-    os <<"        \"m_Account\": \"" <<aCancelOrder.m_Account  <<"\"" <<std::endl;
-    os <<"    }" <<std::endl;
-    os <<"}" <<std::endl;
+inline std::ostream& operator<<(
+    std::ostream& os,
+    EES_CancelOrder const& aCancelOrder) {  // NOLINT
+    StringBuffer sb;
+    PrettyWriter<StringBuffer> writer(sb);
+
+    writer.StartObject();
+    writer.Key("EES_CancelOrder");
+        writer.StartObject();
+        writer.Key("m_MarketOrderToken");
+        write_value(
+            &writer,
+            aCancelOrder.m_MarketOrderToken);
+        writer.Key("m_Quantity");
+        write_value(
+            &writer,
+            aCancelOrder.m_Quantity);
+        writer.Key("m_Account");
+        write_value(
+            &writer,
+            aCancelOrder.m_Account);
+        writer.EndObject();
+    writer.EndObject();
+
+    os <<sb.GetString();
+
+    return os;
 }
 
-template< typename CharT, typename TraitsT >
-std::basic_ostream< CharT, TraitsT >& operator<<(std::basic_ostream< CharT, TraitsT >& os, EES_OrderCxled const& aOrderCxled)
-{
-    os <<std::endl;
-    os <<"{" <<std::endl;
-    os <<"    \"EES_OrderCxled\": {" <<std::endl;
-    os <<"        \"m_Userid\": \"" <<aOrderCxled.m_Userid  <<"\"," <<std::endl;
-    os <<"        \"m_Timestamp\": \"" <<aOrderCxled.m_Timestamp  <<"\"," <<std::endl;
-    os <<"        \"m_ClientOrderToken\": \"" <<aOrderCxled.m_ClientOrderToken  <<"\"," <<std::endl;
-    os <<"        \"m_MarketOrderToken\": \"" <<aOrderCxled.m_MarketOrderToken  <<"\"," <<std::endl;
-    os <<"        \"m_Decrement\": \"" <<aOrderCxled.m_Decrement  <<"\"," <<std::endl;
-    os <<"        \"m_Reason\": \"" <<aOrderCxled.m_Reason  <<"\"" <<std::endl;
-    os <<"    }" <<std::endl;
-    os <<"}" <<std::endl;
+inline std::ostream& operator<<(
+    std::ostream& os,
+    EES_OrderCxled const& aOrderCxled) {  // NOLINT
+    StringBuffer sb;
+    PrettyWriter<StringBuffer> writer(sb);
+
+    writer.StartObject();
+    writer.Key("EES_OrderCxled");
+        writer.StartObject();
+        writer.Key("m_Userid");
+        write_value(
+            &writer,
+            aOrderCxled.m_Userid);
+        writer.Key("m_Timestamp");
+        write_value(
+            &writer,
+            aOrderCxled.m_Timestamp);
+        writer.Key("m_ClientOrderToken");
+        write_value(
+            &writer,
+            aOrderCxled.m_ClientOrderToken);
+        writer.Key("m_MarketOrderToken");
+        write_value(
+            &writer,
+            aOrderCxled.m_MarketOrderToken);
+        writer.Key("m_Decrement");
+        write_value(
+            &writer,
+            aOrderCxled.m_Decrement);
+        writer.Key("m_Reason");
+        write_value(
+            &writer,
+            aOrderCxled.m_Reason);
+        writer.EndObject();
+    writer.EndObject();
+
+    os <<sb.GetString();
+
+    return os;
 }
 
-template< typename CharT, typename TraitsT >
-std::basic_ostream< CharT, TraitsT >& operator<<(std::basic_ostream< CharT, TraitsT >& os, EES_QueryAccountOrder const& aQueryAccountOrder)
-{
-    os <<std::endl;
-    os <<"{" <<std::endl;
-    os <<"    \"EES_QueryAccountOrder\": {" <<std::endl;
-    os <<"        \"m_Userid\": \"" <<aQueryAccountOrder.m_Userid  <<"\"," <<std::endl;
-    os <<"        \"m_Timestamp\": \"" <<aQueryAccountOrder.m_Timestamp  <<"\"," <<std::endl;
-    os <<"        \"m_ClientOrderToken\": \"" <<aQueryAccountOrder.m_ClientOrderToken  <<"\"," <<std::endl;
-    os <<"        \"m_SideType\": \"" <<aQueryAccountOrder.m_SideType  <<"\"," <<std::endl;
-    os <<"        \"m_Quantity\": \"" <<aQueryAccountOrder.m_Quantity  <<"\"," <<std::endl;
-    os <<"        \"m_InstrumentType\": \"" <<aQueryAccountOrder.m_InstrumentType  <<"\"," <<std::endl;
-    os <<"        \"m_symbol\": \"" <<aQueryAccountOrder.m_symbol  <<"\"," <<std::endl;
-    os <<"        \"m_Price\": \"" <<aQueryAccountOrder.m_Price  <<"\"," <<std::endl;
-    os <<"        \"m_account\": \"" <<aQueryAccountOrder.m_account  <<"\"," <<std::endl;
-    os <<"        \"m_ExchengeID\": \"" <<aQueryAccountOrder.m_ExchengeID  <<"\"," <<std::endl;
-    os <<"        \"m_ForceCloseReason\": \"" <<aQueryAccountOrder.m_ForceCloseReason  <<"\"," <<std::endl;
-    os <<"        \"m_MarketOrderToken\": \"" <<aQueryAccountOrder.m_MarketOrderToken  <<"\"," <<std::endl;
-    os <<"        \"m_OrderStatus\": \"" <<aQueryAccountOrder.m_OrderStatus  <<"\"," <<std::endl;
-    os <<"        \"m_CloseTime\": \"" <<aQueryAccountOrder.m_CloseTime  <<"\"," <<std::endl;
-    os <<"        \"m_FilledQty\": \"" <<aQueryAccountOrder.m_FilledQty  <<"\"," <<std::endl;
-    os <<"        \"m_Tif\": \"" <<aQueryAccountOrder.m_Tif  <<"\"," <<std::endl;
-    os <<"        \"m_MinQty\": \"" <<aQueryAccountOrder.m_MinQty  <<"\"," <<std::endl;
-    os <<"        \"m_CustomField\": \"" <<aQueryAccountOrder.m_CustomField  <<"\"," <<std::endl;
-    os <<"        \"m_MarketOrderId\": \"" <<aQueryAccountOrder.m_MarketOrderId  <<"\"," <<std::endl;
-    os <<"        \"m_HedgeFlag\": \"" <<aQueryAccountOrder.m_HedgeFlag  <<"\"" <<std::endl;
-    os <<"    }" <<std::endl;
-    os <<"}" <<std::endl;
+inline std::ostream& operator<<(
+    std::ostream& os,
+    EES_QueryAccountOrder const& aQueryAccountOrder) {  // NOLINT
+    StringBuffer sb;
+    PrettyWriter<StringBuffer> writer(sb);
+
+    writer.StartObject();
+    writer.Key("EES_QueryAccountOrder");
+        writer.StartObject();
+        writer.Key("m_Userid");
+        write_value(
+            &writer,
+            aQueryAccountOrder.m_Userid);
+        writer.Key("m_Timestamp");
+        write_value(
+            &writer,
+            aQueryAccountOrder.m_Timestamp);
+        writer.Key("m_ClientOrderToken");
+        write_value(
+            &writer,
+            aQueryAccountOrder.m_ClientOrderToken);
+        writer.Key("m_SideType");
+        write_value(
+            &writer,
+            aQueryAccountOrder.m_SideType);
+        writer.Key("m_Quantity");
+        write_value(
+            &writer,
+            aQueryAccountOrder.m_Quantity);
+        writer.Key("m_InstrumentType");
+        write_value(
+            &writer,
+            aQueryAccountOrder.m_InstrumentType);
+        writer.Key("m_symbol");
+        write_value(
+            &writer,
+            aQueryAccountOrder.m_symbol);
+        writer.Key("m_Price");
+        write_value(
+            &writer,
+            aQueryAccountOrder.m_Price);
+        writer.Key("m_account");
+        write_value(
+            &writer,
+            aQueryAccountOrder.m_account);
+        writer.Key("m_ExchengeID");
+        write_value(
+            &writer,
+            aQueryAccountOrder.m_ExchengeID);
+        writer.Key("m_OptExecFlag");
+        write_value(
+            &writer,
+            aQueryAccountOrder.m_OptExecFlag);
+        writer.Key("m_MarketOrderToken");
+        write_value(
+            &writer,
+            aQueryAccountOrder.m_MarketOrderToken);
+        writer.Key("m_OrderStatus");
+        write_value(
+            &writer,
+            aQueryAccountOrder.m_OrderStatus);
+        writer.Key("m_CloseTime");
+        write_value(
+            &writer,
+            aQueryAccountOrder.m_CloseTime);
+        writer.Key("m_FilledQty");
+        write_value(
+            &writer,
+            aQueryAccountOrder.m_FilledQty);
+        writer.Key("m_Tif");
+        write_value(
+            &writer,
+            aQueryAccountOrder.m_Tif);
+        writer.Key("m_MinQty");
+        write_value(
+            &writer,
+            aQueryAccountOrder.m_MinQty);
+        writer.Key("m_CustomField");
+        write_value(
+            &writer,
+            aQueryAccountOrder.m_CustomField);
+        writer.Key("m_MarketOrderId");
+        write_value(
+            &writer,
+            aQueryAccountOrder.m_MarketOrderId);
+        writer.Key("m_HedgeFlag");
+        write_value(
+            &writer,
+            aQueryAccountOrder.m_HedgeFlag);
+        writer.EndObject();
+    writer.EndObject();
+
+    os <<sb.GetString();
+
+    return os;
 }
 
-template< typename CharT, typename TraitsT >
-std::basic_ostream< CharT, TraitsT >& operator<<(std::basic_ostream< CharT, TraitsT >& os, EES_QueryOrderExecution const& aQueryOrderExecution)
-{
-    os <<std::endl;
-    os <<"{" <<std::endl;
-    os <<"    \"EES_QueryOrderExecution\": {" <<std::endl;
-    os <<"        \"m_Userid\": \"" <<aQueryOrderExecution.m_Userid  <<"\"," <<std::endl;
-    os <<"        \"m_Timestamp\": \"" <<aQueryOrderExecution.m_Timestamp  <<"\"," <<std::endl;
-    os <<"        \"m_ClientOrderToken\": \"" <<aQueryOrderExecution.m_ClientOrderToken  <<"\"," <<std::endl;
-    os <<"        \"m_MarketOrderToken\": \"" <<aQueryOrderExecution.m_MarketOrderToken  <<"\"," <<std::endl;
-    os <<"        \"m_ExecutedQuantity\": \"" <<aQueryOrderExecution.m_ExecutedQuantity  <<"\"," <<std::endl;
-    os <<"        \"m_ExecutionPrice\": \"" <<aQueryOrderExecution.m_ExecutionPrice  <<"\"," <<std::endl;
-    os <<"        \"m_ExecutionID\": \"" <<aQueryOrderExecution.m_ExecutionID  <<"\"," <<std::endl;
-    os <<"        \"m_MarketExecID\": \"" <<aQueryOrderExecution.m_MarketExecID  <<"\"" <<std::endl;
-    os <<"    }" <<std::endl;
-    os <<"}" <<std::endl;
+inline std::ostream& operator<<(
+    std::ostream& os,
+    EES_QueryOrderExecution const& aQueryOrderExecution) {  // NOLINT
+    StringBuffer sb;
+    PrettyWriter<StringBuffer> writer(sb);
+
+    writer.StartObject();
+    writer.Key("EES_QueryOrderExecution");
+        writer.StartObject();
+        writer.Key("m_Userid");
+        write_value(
+            &writer,
+            aQueryOrderExecution.m_Userid);
+        writer.Key("m_Timestamp");
+        write_value(
+            &writer,
+            aQueryOrderExecution.m_Timestamp);
+        writer.Key("m_ClientOrderToken");
+        write_value(
+            &writer,
+            aQueryOrderExecution.m_ClientOrderToken);
+        writer.Key("m_MarketOrderToken");
+        write_value(
+            &writer,
+            aQueryOrderExecution.m_MarketOrderToken);
+        writer.Key("m_ExecutedQuantity");
+        write_value(
+            &writer,
+            aQueryOrderExecution.m_ExecutedQuantity);
+        writer.Key("m_ExecutionPrice");
+        write_value(
+            &writer,
+            aQueryOrderExecution.m_ExecutionPrice);
+        writer.Key("m_ExecutionID");
+        write_value(
+            &writer,
+            aQueryOrderExecution.m_ExecutionID);
+        writer.Key("m_MarketExecID");
+        write_value(
+            &writer,
+            aQueryOrderExecution.m_MarketExecID);
+        writer.EndObject();
+    writer.EndObject();
+
+    os <<sb.GetString();
+
+    return os;
 }
 
-template< typename CharT, typename TraitsT >
-std::basic_ostream< CharT, TraitsT >& operator<<(std::basic_ostream< CharT, TraitsT >& os, EES_QueryAccountTradeFinish const& aQueryAccountTradeFinish)
-{
-    os <<std::endl;
-    os <<"{" <<std::endl;
-    os <<"    \"EES_QueryAccountTradeFinish\": {" <<std::endl;
-    os <<"        \"m_account\": \"" <<aQueryAccountTradeFinish.m_account  <<"\"" <<std::endl;
-    os <<"    }" <<std::endl;
-    os <<"}" <<std::endl;
+inline std::ostream& operator<<(
+    std::ostream& os,
+    EES_QueryAccountTradeFinish const& aQueryAccountTradeFinish) {  // NOLINT
+    StringBuffer sb;
+    PrettyWriter<StringBuffer> writer(sb);
+
+    writer.StartObject();
+    writer.Key("EES_QueryAccountTradeFinish");
+        writer.StartObject();
+        writer.Key("m_account");
+        write_value(
+            &writer,
+            aQueryAccountTradeFinish.m_account);
+        writer.EndObject();
+    writer.EndObject();
+
+    os <<sb.GetString();
+
+    return os;
 }
 
-template< typename CharT, typename TraitsT >
-std::basic_ostream< CharT, TraitsT >& operator<<(std::basic_ostream< CharT, TraitsT >& os, EES_AccountInfo const& aAccountInfo)
-{
-    os <<std::endl;
-    os <<"{" <<std::endl;
-    os <<"    \"EES_AccountInfo\": {" <<std::endl;
-    os <<"        \"m_Account\": \"" <<aAccountInfo.m_Account  <<"\"," <<std::endl;
-    os <<"        \"m_Previlege\": \"" <<aAccountInfo.m_Previlege  <<"\"," <<std::endl;
-    os <<"        \"m_InitialBp\": \"" <<aAccountInfo.m_InitialBp  <<"\"," <<std::endl;
-    os <<"        \"m_AvailableBp\": \"" <<aAccountInfo.m_AvailableBp  <<"\"," <<std::endl;
-    os <<"        \"m_Margin\": \"" <<aAccountInfo.m_Margin  <<"\"," <<std::endl;
-    os <<"        \"m_FrozenMargin\": \"" <<aAccountInfo.m_FrozenMargin  <<"\"," <<std::endl;
-    os <<"        \"m_CommissionFee\": \"" <<aAccountInfo.m_CommissionFee  <<"\"," <<std::endl;
-    os <<"        \"m_FrozenCommission\": \"" <<aAccountInfo.m_FrozenCommission  <<"\"" <<std::endl;
-    os <<"    }" <<std::endl;
-    os <<"}" <<std::endl;
+inline std::ostream& operator<<(
+    std::ostream& os,
+    EES_AccountInfo const& aAccountInfo) {  // NOLINT
+    StringBuffer sb;
+    PrettyWriter<StringBuffer> writer(sb);
+
+    writer.StartObject();
+    writer.Key("EES_AccountInfo");
+        writer.StartObject();
+        writer.Key("m_Account");
+        write_value(
+            &writer,
+            aAccountInfo.m_Account);
+        writer.Key("m_Previlege");
+        write_value(
+            &writer,
+            aAccountInfo.m_Previlege);
+        writer.Key("m_InitialBp");
+        write_value(
+            &writer,
+            aAccountInfo.m_InitialBp);
+        writer.Key("m_AvailableBp");
+        write_value(
+            &writer,
+            aAccountInfo.m_AvailableBp);
+        writer.Key("m_Margin");
+        write_value(
+            &writer,
+            aAccountInfo.m_Margin);
+        writer.Key("m_FrozenMargin");
+        write_value(
+            &writer,
+            aAccountInfo.m_FrozenMargin);
+        writer.Key("m_CommissionFee");
+        write_value(
+            &writer,
+            aAccountInfo.m_CommissionFee);
+        writer.Key("m_FrozenCommission");
+        write_value(
+            &writer,
+            aAccountInfo.m_FrozenCommission);
+        writer.EndObject();
+    writer.EndObject();
+
+    os <<sb.GetString();
+
+    return os;
 }
 
-template< typename CharT, typename TraitsT >
-std::basic_ostream< CharT, TraitsT >& operator<<(std::basic_ostream< CharT, TraitsT >& os, EES_AccountPosition const& aAccountPosition)
-{
-    os <<std::endl;
-    os <<"{" <<std::endl;
-    os <<"    \"EES_AccountPosition\": {" <<std::endl;
-    os <<"        \"m_actId\": \"" <<aAccountPosition.m_actId  <<"\"," <<std::endl;
-    os <<"        \"m_Symbol\": \"" <<aAccountPosition.m_Symbol  <<"\"," <<std::endl;
-    os <<"        \"m_PosiDirection\": \"" <<aAccountPosition.m_PosiDirection  <<"\"," <<std::endl;
-    os <<"        \"m_InitOvnQty\": \"" <<aAccountPosition.m_InitOvnQty  <<"\"," <<std::endl;
-    os <<"        \"m_OvnQty\": \"" <<aAccountPosition.m_OvnQty  <<"\"," <<std::endl;
-    os <<"        \"m_FrozenOvnQty\": \"" <<aAccountPosition.m_FrozenOvnQty  <<"\"," <<std::endl;
-    os <<"        \"m_TodayQty\": \"" <<aAccountPosition.m_TodayQty  <<"\"," <<std::endl;
-    os <<"        \"m_FrozenTodayQty\": \"" <<aAccountPosition.m_FrozenTodayQty  <<"\"," <<std::endl;
-    os <<"        \"m_OvnMargin\": \"" <<aAccountPosition.m_OvnMargin  <<"\"," <<std::endl;
-    os <<"        \"m_TodayMargin\": \"" <<aAccountPosition.m_TodayMargin  <<"\"," <<std::endl;
-    os <<"        \"m_HedgeFlag\": \"" <<aAccountPosition.m_HedgeFlag  <<"\"" <<std::endl;
-    os <<"    }" <<std::endl;
-    os <<"}" <<std::endl;
+inline std::ostream& operator<<(
+    std::ostream& os,
+    EES_AccountPosition const& aAccountPosition) {  // NOLINT
+    StringBuffer sb;
+    PrettyWriter<StringBuffer> writer(sb);
+
+    writer.StartObject();
+    writer.Key("EES_AccountPosition");
+        writer.StartObject();
+        writer.Key("m_actId");
+        write_value(
+            &writer,
+            aAccountPosition.m_actId);
+        writer.Key("m_Symbol");
+        write_value(
+            &writer,
+            aAccountPosition.m_Symbol);
+        writer.Key("m_PosiDirection");
+        write_value(
+            &writer,
+            aAccountPosition.m_PosiDirection);
+        writer.Key("m_InitOvnQty");
+        write_value(
+            &writer,
+            aAccountPosition.m_InitOvnQty);
+        writer.Key("m_OvnQty");
+        write_value(
+            &writer,
+            aAccountPosition.m_OvnQty);
+        writer.Key("m_FrozenOvnQty");
+        write_value(
+            &writer,
+            aAccountPosition.m_FrozenOvnQty);
+        writer.Key("m_TodayQty");
+        write_value(
+            &writer,
+            aAccountPosition.m_TodayQty);
+        writer.Key("m_FrozenTodayQty");
+        write_value(
+            &writer,
+            aAccountPosition.m_FrozenTodayQty);
+        writer.Key("m_OvnMargin");
+        write_value(
+            &writer,
+            aAccountPosition.m_OvnMargin);
+        writer.Key("m_TodayMargin");
+        write_value(
+            &writer,
+            aAccountPosition.m_TodayMargin);
+        writer.Key("m_PositionCost");
+        write_value(
+            &writer,
+            aAccountPosition.m_PositionCost);
+        writer.Key("m_HedgeFlag");
+        write_value(
+            &writer,
+            aAccountPosition.m_HedgeFlag);
+        writer.EndObject();
+    writer.EndObject();
+
+    os <<sb.GetString();
+
+    return os;
 }
 
-template< typename CharT, typename TraitsT >
-std::basic_ostream< CharT, TraitsT >& operator<<(std::basic_ostream< CharT, TraitsT >& os, EES_AccountBP const& aAccountBP)
-{
-    os <<std::endl;
-    os <<"{" <<std::endl;
-    os <<"    \"EES_AccountBP\": {" <<std::endl;
-    os <<"        \"m_account\": \"" <<aAccountBP.m_account  <<"\"," <<std::endl;
-    os <<"        \"m_InitialBp\": \"" <<aAccountBP.m_InitialBp  <<"\"," <<std::endl;
-    os <<"        \"m_AvailableBp\": \"" <<aAccountBP.m_AvailableBp  <<"\"," <<std::endl;
-    os <<"        \"m_Margin\": \"" <<aAccountBP.m_Margin  <<"\"," <<std::endl;
-    os <<"        \"m_FrozenMargin\": \"" <<aAccountBP.m_FrozenMargin  <<"\"," <<std::endl;
-    os <<"        \"m_CommissionFee\": \"" <<aAccountBP.m_CommissionFee  <<"\"," <<std::endl;
-    os <<"        \"m_FrozenCommission\": \"" <<aAccountBP.m_FrozenCommission  <<"\"," <<std::endl;
-    os <<"        \"m_OvnInitMargin\": \"" <<aAccountBP.m_OvnInitMargin  <<"\"," <<std::endl;
-    os <<"        \"m_TotalLiquidPL\": \"" <<aAccountBP.m_TotalLiquidPL  <<"\"," <<std::endl;
-    os <<"        \"m_TotalMarketPL\": \"" <<aAccountBP.m_TotalMarketPL  <<"\"" <<std::endl;
-    os <<"    }" <<std::endl;
-    os <<"}" <<std::endl;
+inline std::ostream& operator<<(
+    std::ostream& os,
+    EES_AccountOptionPosition const& aAccountOptionPosition) {  // NOLINT
+    StringBuffer sb;
+    PrettyWriter<StringBuffer> writer(sb);
+
+    writer.StartObject();
+    writer.Key("EES_AccountOptionPosition");
+        writer.StartObject();
+        writer.Key("m_actId");
+        write_value(
+            &writer,
+            aAccountOptionPosition.m_actId);
+        writer.Key("m_Symbol");
+        write_value(
+            &writer,
+            aAccountOptionPosition.m_Symbol);
+        writer.Key("m_PosiDirection");
+        write_value(
+            &writer,
+            aAccountOptionPosition.m_PosiDirection);
+        writer.Key("m_UnderlyingSymbol");
+        write_value(
+            &writer,
+            aAccountOptionPosition.m_UnderlyingSymbol);
+        writer.Key("m_CallPut");
+        write_value(
+            &writer,
+            aAccountOptionPosition.m_CallPut);
+        writer.Key("m_StrikePrice");
+        write_value(
+            &writer,
+            aAccountOptionPosition.m_StrikePrice);
+        writer.Key("m_ExpireDate");
+        write_value(
+            &writer,
+            aAccountOptionPosition.m_ExpireDate);
+        writer.Key("m_InitOvnQty");
+        write_value(
+            &writer,
+            aAccountOptionPosition.m_InitOvnQty);
+        writer.Key("m_CurTotalQty");
+        write_value(
+            &writer,
+            aAccountOptionPosition.m_CurTotalQty);
+        writer.Key("m_CoverLockedQty");
+        write_value(
+            &writer,
+            aAccountOptionPosition.m_CoverLockedQty);
+        writer.Key("m_ExecPendingQty");
+        write_value(
+            &writer,
+            aAccountOptionPosition.m_ExecPendingQty);
+        writer.Key("m_ExecAppliedQty");
+        write_value(
+            &writer,
+            aAccountOptionPosition.m_ExecAppliedQty);
+        writer.Key("m_CxlExecPendingQty");
+        write_value(
+            &writer,
+            aAccountOptionPosition.m_CxlExecPendingQty);
+        writer.Key("m_LiquidPl");
+        write_value(
+            &writer,
+            aAccountOptionPosition.m_LiquidPl);
+        writer.Key("m_AvgPrice");
+        write_value(
+            &writer,
+            aAccountOptionPosition.m_AvgPrice);
+        writer.Key("m_TotalCommissionFee");
+        write_value(
+            &writer,
+            aAccountOptionPosition.m_TotalCommissionFee);
+        writer.Key("m_HedgeFlag");
+        write_value(
+            &writer,
+            aAccountOptionPosition.m_HedgeFlag);
+        writer.EndObject();
+    writer.EndObject();
+
+    os <<sb.GetString();
+
+    return os;
 }
 
-template< typename CharT, typename TraitsT >
-std::basic_ostream< CharT, TraitsT >& operator<<(std::basic_ostream< CharT, TraitsT >& os, EES_SymbolField const& aSymbolField)
-{
-    os <<std::endl;
-    os <<"{" <<std::endl;
-    os <<"    \"EES_SymbolField\": {" <<std::endl;
-    os <<"        \"m_SecType\": \"" <<aSymbolField.m_SecType  <<"\"," <<std::endl;
-    os <<"        \"m_symbol\": \"" <<aSymbolField.m_symbol  <<"\"," <<std::endl;
-    os <<"        \"m_symbolName\": \"" <<aSymbolField.m_symbolName  <<"\"," <<std::endl;
-    os <<"        \"m_ExchangeID\": \"" <<aSymbolField.m_ExchangeID  <<"\"," <<std::endl;
-    os <<"        \"m_ProdID\": \"" <<aSymbolField.m_ProdID  <<"\"," <<std::endl;
-    os <<"        \"m_DeliveryYear\": \"" <<aSymbolField.m_DeliveryYear  <<"\"," <<std::endl;
-    os <<"        \"m_DeliveryMonth\": \"" <<aSymbolField.m_DeliveryMonth  <<"\"," <<std::endl;
-    os <<"        \"m_MaxMarketOrderVolume\": \"" <<aSymbolField.m_MaxMarketOrderVolume  <<"\"," <<std::endl;
-    os <<"        \"m_MinMarketOrderVolume\": \"" <<aSymbolField.m_MinMarketOrderVolume  <<"\"," <<std::endl;
-    os <<"        \"m_MaxLimitOrderVolume\": \"" <<aSymbolField.m_MaxLimitOrderVolume  <<"\"," <<std::endl;
-    os <<"        \"m_MinLimitOrderVolume\": \"" <<aSymbolField.m_MinLimitOrderVolume  <<"\"," <<std::endl;
-    os <<"        \"m_VolumeMultiple\": \"" <<aSymbolField.m_VolumeMultiple  <<"\"," <<std::endl;
-    os <<"        \"m_PriceTick\": \"" <<aSymbolField.m_PriceTick  <<"\"," <<std::endl;
-    os <<"        \"m_CreateDate\": \"" <<aSymbolField.m_CreateDate  <<"\"," <<std::endl;
-    os <<"        \"m_OpenDate\": \"" <<aSymbolField.m_OpenDate  <<"\"," <<std::endl;
-    os <<"        \"m_ExpireDate\": \"" <<aSymbolField.m_ExpireDate  <<"\"," <<std::endl;
-    os <<"        \"m_StartDelivDate\": \"" <<aSymbolField.m_StartDelivDate  <<"\"," <<std::endl;
-    os <<"        \"m_EndDelivDate\": \"" <<aSymbolField.m_EndDelivDate  <<"\"," <<std::endl;
-    os <<"        \"m_InstLifePhase\": \"" <<aSymbolField.m_InstLifePhase  <<"\"," <<std::endl;
-    os <<"        \"m_IsTrading\": \"" <<aSymbolField.m_IsTrading  <<"\"" <<std::endl;
-    os <<"    }" <<std::endl;
-    os <<"}" <<std::endl;
+inline std::ostream& operator<<(
+    std::ostream& os,
+    EES_AccountBP const& aAccountBP) {  // NOLINT
+    StringBuffer sb;
+    PrettyWriter<StringBuffer> writer(sb);
+
+    writer.StartObject();
+    writer.Key("EES_AccountBP");
+        writer.StartObject();
+        writer.Key("m_account");
+        write_value(
+            &writer,
+            aAccountBP.m_account);
+        writer.Key("m_InitialBp");
+        write_value(
+            &writer,
+            aAccountBP.m_InitialBp);
+        writer.Key("m_AvailableBp");
+        write_value(
+            &writer,
+            aAccountBP.m_AvailableBp);
+        writer.Key("m_Margin");
+        write_value(
+            &writer,
+            aAccountBP.m_Margin);
+        writer.Key("m_FrozenMargin");
+        write_value(
+            &writer,
+            aAccountBP.m_FrozenMargin);
+        writer.Key("m_CommissionFee");
+        write_value(
+            &writer,
+            aAccountBP.m_CommissionFee);
+        writer.Key("m_FrozenCommission");
+        write_value(
+            &writer,
+            aAccountBP.m_FrozenCommission);
+        writer.Key("m_OvnInitMargin");
+        write_value(
+            &writer,
+            aAccountBP.m_OvnInitMargin);
+        writer.Key("m_TotalLiquidPL");
+        write_value(
+            &writer,
+            aAccountBP.m_TotalLiquidPL);
+        writer.Key("m_TotalMarketPL");
+        write_value(
+            &writer,
+            aAccountBP.m_TotalMarketPL);
+        writer.EndObject();
+    writer.EndObject();
+
+    os <<sb.GetString();
+
+    return os;
 }
 
-template< typename CharT, typename TraitsT >
-std::basic_ostream< CharT, TraitsT >& operator<<(std::basic_ostream< CharT, TraitsT >& os, EES_AccountMargin const& aAccountMargin)
-{
-    os <<std::endl;
-    os <<"{" <<std::endl;
-    os <<"    \"EES_AccountMargin\": {" <<std::endl;
-    os <<"        \"m_SecType\": \"" <<aAccountMargin.m_SecType  <<"\"," <<std::endl;
-    os <<"        \"m_symbol\": \"" <<aAccountMargin.m_symbol  <<"\"," <<std::endl;
-    os <<"        \"m_ExchangeID\": \"" <<aAccountMargin.m_ExchangeID  <<"\"," <<std::endl;
-    os <<"        \"m_ProdID\": \"" <<aAccountMargin.m_ProdID  <<"\"," <<std::endl;
-    os <<"        \"m_LongMarginRatio\": \"" <<aAccountMargin.m_LongMarginRatio  <<"\"," <<std::endl;
-    os <<"        \"m_ShortMarginRatio\": \"" <<aAccountMargin.m_ShortMarginRatio  <<"\"" <<std::endl;
-    os <<"    }" <<std::endl;
-    os <<"}" <<std::endl;
+inline std::ostream& operator<<(
+    std::ostream& os,
+    EES_SymbolField const& aSymbolField) {  // NOLINT
+    StringBuffer sb;
+    PrettyWriter<StringBuffer> writer(sb);
+
+    writer.StartObject();
+    writer.Key("EES_SymbolField");
+        writer.StartObject();
+        writer.Key("m_SecType");
+        write_value(
+            &writer,
+            aSymbolField.m_SecType);
+        writer.Key("m_symbol");
+        write_value(
+            &writer,
+            aSymbolField.m_symbol);
+        writer.Key("m_symbolName");
+        write_value(
+            &writer,
+            aSymbolField.m_symbolName);
+        writer.Key("m_ExchangeID");
+        write_value(
+            &writer,
+            aSymbolField.m_ExchangeID);
+        writer.Key("m_ProdID");
+        write_value(
+            &writer,
+            aSymbolField.m_ProdID);
+        writer.Key("m_DeliveryYear");
+        write_value(
+            &writer,
+            aSymbolField.m_DeliveryYear);
+        writer.Key("m_DeliveryMonth");
+        write_value(
+            &writer,
+            aSymbolField.m_DeliveryMonth);
+        writer.Key("m_MaxMarketOrderVolume");
+        write_value(
+            &writer,
+            aSymbolField.m_MaxMarketOrderVolume);
+        writer.Key("m_MinMarketOrderVolume");
+        write_value(
+            &writer,
+            aSymbolField.m_MinMarketOrderVolume);
+        writer.Key("m_MaxLimitOrderVolume");
+        write_value(
+            &writer,
+            aSymbolField.m_MaxLimitOrderVolume);
+        writer.Key("m_MinLimitOrderVolume");
+        write_value(
+            &writer,
+            aSymbolField.m_MinLimitOrderVolume);
+        writer.Key("m_VolumeMultiple");
+        write_value(
+            &writer,
+            aSymbolField.m_VolumeMultiple);
+        writer.Key("m_PriceTick");
+        write_value(
+            &writer,
+            aSymbolField.m_PriceTick);
+        writer.Key("m_CreateDate");
+        write_value(
+            &writer,
+            aSymbolField.m_CreateDate);
+        writer.Key("m_OpenDate");
+        write_value(
+            &writer,
+            aSymbolField.m_OpenDate);
+        writer.Key("m_ExpireDate");
+        write_value(
+            &writer,
+            aSymbolField.m_ExpireDate);
+        writer.Key("m_StartDelivDate");
+        write_value(
+            &writer,
+            aSymbolField.m_StartDelivDate);
+        writer.Key("m_EndDelivDate");
+        write_value(
+            &writer,
+            aSymbolField.m_EndDelivDate);
+        writer.Key("m_InstLifePhase");
+        write_value(
+            &writer,
+            aSymbolField.m_InstLifePhase);
+        writer.Key("m_IsTrading");
+        write_value(
+            &writer,
+            aSymbolField.m_IsTrading);
+        writer.Key("m_StrikePrice");
+        write_value(
+            &writer,
+            aSymbolField.m_StrikePrice);
+        writer.Key("m_CallPut");
+        write_value(
+            &writer,
+            aSymbolField.m_CallPut);
+        writer.Key("m_UnderlyingSymbol");
+        write_value(
+            &writer,
+            aSymbolField.m_UnderlyingSymbol);
+        writer.EndObject();
+    writer.EndObject();
+
+    os <<sb.GetString();
+
+    return os;
 }
 
-template< typename CharT, typename TraitsT >
-std::basic_ostream< CharT, TraitsT >& operator<<(std::basic_ostream< CharT, TraitsT >& os, EES_AccountFee const& aAccountFee)
-{
-    os <<std::endl;
-    os <<"{" <<std::endl;
-    os <<"    \"EES_AccountFee\": {" <<std::endl;
-    os <<"        \"m_SecType\": \"" <<aAccountFee.m_SecType  <<"\"," <<std::endl;
-    os <<"        \"m_symbol\": \"" <<aAccountFee.m_symbol  <<"\"," <<std::endl;
-    os <<"        \"m_ExchangeID\": \"" <<aAccountFee.m_ExchangeID  <<"\"," <<std::endl;
-    os <<"        \"m_ProdID\": \"" <<aAccountFee.m_ProdID  <<"\"," <<std::endl;
-    os <<"        \"m_OpenRatioByMoney\": \"" <<aAccountFee.m_OpenRatioByMoney  <<"\"," <<std::endl;
-    os <<"        \"m_OpenRatioByVolume\": \"" <<aAccountFee.m_OpenRatioByVolume  <<"\"," <<std::endl;
-    os <<"        \"m_CloseYesterdayRatioByMoney\": \"" <<aAccountFee.m_CloseYesterdayRatioByMoney  <<"\"," <<std::endl;
-    os <<"        \"m_CloseYesterdayRatioByVolume\": \"" <<aAccountFee.m_CloseYesterdayRatioByVolume  <<"\"," <<std::endl;
-    os <<"        \"m_CloseTodayRatioByMoney\": \"" <<aAccountFee.m_CloseTodayRatioByMoney  <<"\"," <<std::endl;
-    os <<"        \"m_CloseTodayRatioByVolume\": \"" <<aAccountFee.m_CloseTodayRatioByVolume  <<"\"," <<std::endl;
-    os <<"        \"m_PositionDir\": \"" <<aAccountFee.m_PositionDir  <<"\"" <<std::endl;
-    os <<"    }" <<std::endl;
-    os <<"}" <<std::endl;
+inline std::ostream& operator<<(
+    std::ostream& os,
+    EES_AccountMargin const& aAccountMargin) {  // NOLINT
+    StringBuffer sb;
+    PrettyWriter<StringBuffer> writer(sb);
+
+    writer.StartObject();
+    writer.Key("EES_AccountMargin");
+        writer.StartObject();
+        writer.Key("m_SecType");
+        write_value(
+            &writer,
+            aAccountMargin.m_SecType);
+        writer.Key("m_symbol");
+        write_value(
+            &writer,
+            aAccountMargin.m_symbol);
+        writer.Key("m_ExchangeID");
+        write_value(
+            &writer,
+            aAccountMargin.m_ExchangeID);
+        writer.Key("m_ProdID");
+        write_value(
+            &writer,
+            aAccountMargin.m_ProdID);
+        writer.Key("m_LongMarginRatio");
+        write_value(
+            &writer,
+            aAccountMargin.m_LongMarginRatio);
+        writer.Key("m_ShortMarginRatio");
+        write_value(
+            &writer,
+            aAccountMargin.m_ShortMarginRatio);
+        writer.EndObject();
+    writer.EndObject();
+
+    os <<sb.GetString();
+
+    return os;
 }
 
-template< typename CharT, typename TraitsT >
-std::basic_ostream< CharT, TraitsT >& operator<<(std::basic_ostream< CharT, TraitsT >& os, EES_CxlOrderRej const& aCxlOrderRej)
-{
-    os <<std::endl;
-    os <<"{" <<std::endl;
-    os <<"    \"EES_CxlOrderRej\": {" <<std::endl;
-    os <<"        \"m_account\": \"" <<aCxlOrderRej.m_account  <<"\"," <<std::endl;
-    os <<"        \"m_MarketOrderToken\": \"" <<aCxlOrderRej.m_MarketOrderToken  <<"\"," <<std::endl;
-    os <<"        \"m_ReasonCode\": \"" <<aCxlOrderRej.m_ReasonCode  <<"\"," <<std::endl;
-    os <<"        \"m_ReasonText\": \"" <<aCxlOrderRej.m_ReasonText  <<"\"" <<std::endl;
-    os <<"    }" <<std::endl;
-    os <<"}" <<std::endl;
+inline std::ostream& operator<<(
+    std::ostream& os,
+    EES_AccountFee const& aAccountFee) {  // NOLINT
+    StringBuffer sb;
+    PrettyWriter<StringBuffer> writer(sb);
+
+    writer.StartObject();
+    writer.Key("EES_AccountFee");
+        writer.StartObject();
+        writer.Key("m_SecType");
+        write_value(
+            &writer,
+            aAccountFee.m_SecType);
+        writer.Key("m_symbol");
+        write_value(
+            &writer,
+            aAccountFee.m_symbol);
+        writer.Key("m_ExchangeID");
+        write_value(
+            &writer,
+            aAccountFee.m_ExchangeID);
+        writer.Key("m_ProdID");
+        write_value(
+            &writer,
+            aAccountFee.m_ProdID);
+        writer.Key("m_OpenRatioByMoney");
+        write_value(
+            &writer,
+            aAccountFee.m_OpenRatioByMoney);
+        writer.Key("m_OpenRatioByVolume");
+        write_value(
+            &writer,
+            aAccountFee.m_OpenRatioByVolume);
+        writer.Key("m_CloseYesterdayRatioByMoney");
+        write_value(
+            &writer,
+            aAccountFee.m_CloseYesterdayRatioByMoney);
+        writer.Key("m_CloseYesterdayRatioByVolume");
+        write_value(
+            &writer,
+            aAccountFee.m_CloseYesterdayRatioByVolume);
+        writer.Key("m_CloseTodayRatioByMoney");
+        write_value(
+            &writer,
+            aAccountFee.m_CloseTodayRatioByMoney);
+        writer.Key("m_CloseTodayRatioByVolume");
+        write_value(
+            &writer,
+            aAccountFee.m_CloseTodayRatioByVolume);
+        writer.Key("m_PositionDir");
+        write_value(
+            &writer,
+            aAccountFee.m_PositionDir);
+        writer.EndObject();
+    writer.EndObject();
+
+    os <<sb.GetString();
+
+    return os;
 }
 
-template< typename CharT, typename TraitsT >
-std::basic_ostream< CharT, TraitsT >& operator<<(std::basic_ostream< CharT, TraitsT >& os, EES_PostOrder const& aPostOrder)
-{
-    os <<std::endl;
-    os <<"{" <<std::endl;
-    os <<"    \"EES_PostOrder\": {" <<std::endl;
-    os <<"        \"m_Userid\": \"" <<aPostOrder.m_Userid  <<"\"," <<std::endl;
-    os <<"        \"m_Timestamp\": \"" <<aPostOrder.m_Timestamp  <<"\"," <<std::endl;
-    os <<"        \"m_MarketOrderToken\": \"" <<aPostOrder.m_MarketOrderToken  <<"\"," <<std::endl;
-    os <<"        \"m_ClientOrderToken\": \"" <<aPostOrder.m_ClientOrderToken  <<"\"," <<std::endl;
-    os <<"        \"m_SideType\": \"" <<aPostOrder.m_SideType  <<"\"," <<std::endl;
-    os <<"        \"m_Quantity\": \"" <<aPostOrder.m_Quantity  <<"\"," <<std::endl;
-    os <<"        \"m_SecType\": \"" <<aPostOrder.m_SecType  <<"\"," <<std::endl;
-    os <<"        \"m_Symbol\": \"" <<aPostOrder.m_Symbol  <<"\"," <<std::endl;
-    os <<"        \"m_price\": \"" <<aPostOrder.m_price  <<"\"," <<std::endl;
-    os <<"        \"m_account\": \"" <<aPostOrder.m_account  <<"\"," <<std::endl;
-    os <<"        \"m_ExchangeID\": \"" <<aPostOrder.m_ExchangeID  <<"\"," <<std::endl;
-    os <<"        \"m_ForceCloseReason\": \"" <<aPostOrder.m_ForceCloseReason  <<"\"," <<std::endl;
-    os <<"        \"m_OrderState\": \"" <<aPostOrder.m_OrderState  <<"\"," <<std::endl;
-    os <<"        \"m_ExchangeOrderID\": \"" <<aPostOrder.m_ExchangeOrderID  <<"\"," <<std::endl;
-    os <<"        \"m_HedgeFlag\": \"" <<aPostOrder.m_HedgeFlag  <<"\"" <<std::endl;
-    os <<"    }" <<std::endl;
-    os <<"}" <<std::endl;
+inline std::ostream& operator<<(
+    std::ostream& os,
+    EES_CxlOrderRej const& aCxlOrderRej) {  // NOLINT
+    StringBuffer sb;
+    PrettyWriter<StringBuffer> writer(sb);
+
+    writer.StartObject();
+    writer.Key("EES_CxlOrderRej");
+        writer.StartObject();
+        writer.Key("m_account");
+        write_value(
+            &writer,
+            aCxlOrderRej.m_account);
+        writer.Key("m_MarketOrderToken");
+        write_value(
+            &writer,
+            aCxlOrderRej.m_MarketOrderToken);
+        writer.Key("m_ReasonCode");
+        write_value(
+            &writer,
+            aCxlOrderRej.m_ReasonCode);
+        writer.Key("m_ReasonText");
+        write_value(
+            &writer,
+            aCxlOrderRej.m_ReasonText);
+        writer.EndObject();
+    writer.EndObject();
+
+    os <<sb.GetString();
+
+    return os;
 }
 
-template< typename CharT, typename TraitsT >
-std::basic_ostream< CharT, TraitsT >& operator<<(std::basic_ostream< CharT, TraitsT >& os, EES_PostOrderExecution const& aPostOrderExecution)
-{
-    os <<std::endl;
-    os <<"{" <<std::endl;
-    os <<"    \"EES_PostOrderExecution\": {" <<std::endl;
-    os <<"        \"m_Userid\": \"" <<aPostOrderExecution.m_Userid  <<"\"," <<std::endl;
-    os <<"        \"m_Timestamp\": \"" <<aPostOrderExecution.m_Timestamp  <<"\"," <<std::endl;
-    os <<"        \"m_MarketOrderToken\": \"" <<aPostOrderExecution.m_MarketOrderToken  <<"\"," <<std::endl;
-    os <<"        \"m_ExecutedQuantity\": \"" <<aPostOrderExecution.m_ExecutedQuantity  <<"\"," <<std::endl;
-    os <<"        \"m_ExecutionPrice\": \"" <<aPostOrderExecution.m_ExecutionPrice  <<"\"," <<std::endl;
-    os <<"        \"m_ExecutionNumber\": \"" <<aPostOrderExecution.m_ExecutionNumber  <<"\"" <<std::endl;
-    os <<"    }" <<std::endl;
-    os <<"}" <<std::endl;
+inline std::ostream& operator<<(
+    std::ostream& os,
+    EES_PostOrder const& aPostOrder) {  // NOLINT
+    StringBuffer sb;
+    PrettyWriter<StringBuffer> writer(sb);
+
+    writer.StartObject();
+    writer.Key("EES_PostOrder");
+        writer.StartObject();
+        writer.Key("m_Userid");
+        write_value(
+            &writer,
+            aPostOrder.m_Userid);
+        writer.Key("m_Timestamp");
+        write_value(
+            &writer,
+            aPostOrder.m_Timestamp);
+        writer.Key("m_MarketOrderToken");
+        write_value(
+            &writer,
+            aPostOrder.m_MarketOrderToken);
+        writer.Key("m_ClientOrderToken");
+        write_value(
+            &writer,
+            aPostOrder.m_ClientOrderToken);
+        writer.Key("m_SideType");
+        write_value(
+            &writer,
+            aPostOrder.m_SideType);
+        writer.Key("m_Quantity");
+        write_value(
+            &writer,
+            aPostOrder.m_Quantity);
+        writer.Key("m_SecType");
+        write_value(
+            &writer,
+            aPostOrder.m_SecType);
+        writer.Key("m_Symbol");
+        write_value(
+            &writer,
+            aPostOrder.m_Symbol);
+        writer.Key("m_price");
+        write_value(
+            &writer,
+            aPostOrder.m_price);
+        writer.Key("m_account");
+        write_value(
+            &writer,
+            aPostOrder.m_account);
+        writer.Key("m_ExchangeID");
+        write_value(
+            &writer,
+            aPostOrder.m_ExchangeID);
+        writer.Key("m_OptExecFlag");
+        write_value(
+            &writer,
+            aPostOrder.m_OptExecFlag);
+        writer.Key("m_OrderState");
+        write_value(
+            &writer,
+            aPostOrder.m_OrderState);
+        writer.Key("m_ExchangeOrderID");
+        write_value(
+            &writer,
+            aPostOrder.m_ExchangeOrderID);
+        writer.Key("m_HedgeFlag");
+        write_value(
+            &writer,
+            aPostOrder.m_HedgeFlag);
+        writer.EndObject();
+    writer.EndObject();
+
+    os <<sb.GetString();
+
+    return os;
 }
 
-template< typename CharT, typename TraitsT >
-std::basic_ostream< CharT, TraitsT >& operator<<(std::basic_ostream< CharT, TraitsT >& os, EES_ExchangeMarketSession const& aExchangeMarketSession)
-{
-    os <<std::endl;
-    os <<"{" <<std::endl;
-    os <<"    \"EES_ExchangeMarketSession\": {" <<std::endl;
-    os <<"        \"m_ExchangeID\": \"" <<aExchangeMarketSession.m_ExchangeID  <<"\"," <<std::endl;
-    os <<"        \"m_SessionCount\": \"" <<aExchangeMarketSession.m_SessionCount  <<"\"," <<std::endl;
-    os <<"        \"m_SessionId[255]\": \"" <<aExchangeMarketSession.m_SessionId[255]  <<"\"" <<std::endl;
-    os <<"    }" <<std::endl;
-    os <<"}" <<std::endl;
+inline std::ostream& operator<<(
+    std::ostream& os,
+    EES_PostOrderExecution const& aPostOrderExecution) {  // NOLINT
+    StringBuffer sb;
+    PrettyWriter<StringBuffer> writer(sb);
+
+    writer.StartObject();
+    writer.Key("EES_PostOrderExecution");
+        writer.StartObject();
+        writer.Key("m_Userid");
+        write_value(
+            &writer,
+            aPostOrderExecution.m_Userid);
+        writer.Key("m_Timestamp");
+        write_value(
+            &writer,
+            aPostOrderExecution.m_Timestamp);
+        writer.Key("m_MarketOrderToken");
+        write_value(
+            &writer,
+            aPostOrderExecution.m_MarketOrderToken);
+        writer.Key("m_ExecutedQuantity");
+        write_value(
+            &writer,
+            aPostOrderExecution.m_ExecutedQuantity);
+        writer.Key("m_ExecutionPrice");
+        write_value(
+            &writer,
+            aPostOrderExecution.m_ExecutionPrice);
+        writer.Key("m_ExecutionNumber");
+        write_value(
+            &writer,
+            aPostOrderExecution.m_ExecutionNumber);
+        writer.EndObject();
+    writer.EndObject();
+
+    os <<sb.GetString();
+
+    return os;
 }
 
-template< typename CharT, typename TraitsT >
-std::basic_ostream< CharT, TraitsT >& operator<<(std::basic_ostream< CharT, TraitsT >& os, EES_SymbolStatus const& aSymbolStatus)
-{
-    os <<std::endl;
-    os <<"{" <<std::endl;
-    os <<"    \"EES_SymbolStatus\": {" <<std::endl;
-    os <<"        \"m_ExchangeID\": \"" <<aSymbolStatus.m_ExchangeID  <<"\"," <<std::endl;
-    os <<"        \"m_Symbol\": \"" <<aSymbolStatus.m_Symbol  <<"\"," <<std::endl;
-    os <<"        \"m_InstrumentStatus\": \"" <<aSymbolStatus.m_InstrumentStatus  <<"\"," <<std::endl;
-    os <<"        \"m_TradingSegmentSN\": \"" <<aSymbolStatus.m_TradingSegmentSN  <<"\"," <<std::endl;
-    os <<"        \"m_EnterTime[9]\": \"" <<aSymbolStatus.m_EnterTime[9]  <<"\"," <<std::endl;
-    os <<"        \"m_EnterReason\": \"" <<aSymbolStatus.m_EnterReason  <<"\"" <<std::endl;
-    os <<"    }" <<std::endl;
-    os <<"}" <<std::endl;
+inline std::ostream& operator<<(
+    std::ostream& os,
+    EES_ExchangeMarketSession const& aExchangeMarketSession) {  // NOLINT
+    StringBuffer sb;
+    PrettyWriter<StringBuffer> writer(sb);
+
+    writer.StartObject();
+    writer.Key("EES_ExchangeMarketSession");
+        writer.StartObject();
+        writer.Key("m_ExchangeID");
+        write_value(
+            &writer,
+            aExchangeMarketSession.m_ExchangeID);
+        writer.Key("m_SessionCount");
+        write_value(
+            &writer,
+            aExchangeMarketSession.m_SessionCount);
+        writer.EndObject();
+    writer.EndObject();
+
+    os <<sb.GetString();
+
+    return os;
+}
+
+inline std::ostream& operator<<(
+    std::ostream& os,
+    EES_SymbolStatus const& aSymbolStatus) {  // NOLINT
+    StringBuffer sb;
+    PrettyWriter<StringBuffer> writer(sb);
+
+    writer.StartObject();
+    writer.Key("EES_SymbolStatus");
+        writer.StartObject();
+        writer.Key("m_ExchangeID");
+        write_value(
+            &writer,
+            aSymbolStatus.m_ExchangeID);
+        writer.Key("m_Symbol");
+        write_value(
+            &writer,
+            aSymbolStatus.m_Symbol);
+        writer.Key("m_InstrumentStatus");
+        write_value(
+            &writer,
+            aSymbolStatus.m_InstrumentStatus);
+        writer.Key("m_TradingSegmentSN");
+        write_value(
+            &writer,
+            aSymbolStatus.m_TradingSegmentSN);
+        writer.Key("m_EnterReason");
+        write_value(
+            &writer,
+            aSymbolStatus.m_EnterReason);
+        writer.EndObject();
+    writer.EndObject();
+
+    os <<sb.GetString();
+
+    return os;
+}
+
+inline std::ostream& operator<<(
+    std::ostream& os,
+    EES_MarketMBLData const& aMarketMBLData) {  // NOLINT
+    StringBuffer sb;
+    PrettyWriter<StringBuffer> writer(sb);
+
+    writer.StartObject();
+    writer.Key("EES_MarketMBLData");
+        writer.StartObject();
+        writer.Key("m_RequestId");
+        write_value(
+            &writer,
+            aMarketMBLData.m_RequestId);
+        writer.Key("m_Result");
+        write_value(
+            &writer,
+            aMarketMBLData.m_Result);
+        writer.Key("m_symbol");
+        write_value(
+            &writer,
+            aMarketMBLData.m_symbol);
+        writer.Key("m_ExchangeID");
+        write_value(
+            &writer,
+            aMarketMBLData.m_ExchangeID);
+        writer.Key("m_Price");
+        write_value(
+            &writer,
+            aMarketMBLData.m_Price);
+        writer.Key("m_Volume");
+        write_value(
+            &writer,
+            aMarketMBLData.m_Volume);
+        writer.Key("m_IsBid");
+        write_value(
+            &writer,
+            aMarketMBLData.m_IsBid);
+        writer.EndObject();
+    writer.EndObject();
+
+    os <<sb.GetString();
+
+    return os;
 }
 
 #endif

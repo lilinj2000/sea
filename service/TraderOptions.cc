@@ -1,46 +1,55 @@
 // Copyright (c) 2010
 // All rights reserved.
 
-#include <boost/program_options.hpp>
-#include <fstream>
-#include <iostream>
 #include "TraderOptions.hh"
 
 namespace sea {
 
-TraderOptions::TraderOptions():
-    options_("SeaTraderOptions") {
-  namespace po = boost::program_options;
+using soil::json::get_item_value;
 
-  options_.add_options()
-      ("sea_trader.svr_address", po::value<std::string>(&svr_address),
-       "svr address")
-      ("sea_trader.svr_port", po::value<int>(&svr_port),
-       "service port")
-      ("sea_trader.qry_address", po::value<std::string>(&qry_address),
-       "qry address")
-      ("sea_trader.qry_port", po::value<int>(&qry_port),
-       "qry port")
-      ("sea_trader.user_id", po::value<std::string>(&user_id),
-       "user id")
-      ("sea_trader.password", po::value<std::string>(&password),
-       "password")
-      ("sea_trader.prod_info", po::value<std::string>(&prod_info),
-       "prod info")
-      ("sea_trader.mac_addr", po::value<std::string>(&mac_addr),
-       "mac addr")
-      ("sea_trader.account_id", po::value<std::string>(&account_id),
-       "account id")
-      ("sea_trader.exchange_id", po::value<unsigned int>(&exchange_id),
-       "exchange id");
+TraderOptions::TraderOptions(
+    const rapidjson::Document& doc) {
+  get_item_value(&svr_address,
+                 doc,
+                 "/sea_trader/svr_address");
+
+  get_item_value(&svr_port,
+                 doc,
+                 "/sea_trader/svr_port");
+
+  get_item_value(&qry_address,
+                 doc,
+                 "/sea_trader/qry_address");
+
+  get_item_value(&qry_port,
+                 doc,
+                 "/sea_trader/qry_port");
+
+  get_item_value(&user_id,
+                 doc,
+                 "/sea_trader/user_id");
+
+  get_item_value(&password,
+                 doc,
+                 "/sea_trader/password");
+
+  get_item_value(&prod_info,
+                 doc,
+                 "/sea_trader/prod_info");
+
+  get_item_value(&mac_addr,
+                 doc,
+                 "/sea_trader/mac_addr");
+
+  get_item_value(&account_id,
+                 doc,
+                 "/sea_trader/account_id");
+
+  get_item_value(&exchange_id,
+                 doc,
+                 "/sea_trader/exchange_id");
+
   return;
-}
-
-TraderOptions::~TraderOptions() {
-}
-
-po::options_description* TraderOptions::configOptions() {
-  return &options_;
 }
 
 }  // namespace sea

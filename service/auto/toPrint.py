@@ -10,7 +10,7 @@ right_brace_pattern = re.compile(r'''\};''')
 
 comment_pattern = re.compile(r'''(//.*)''')
 
-field_pattern = re.compile(r'''\s+(m_.*);''')
+field_pattern = re.compile(r'''\s+(\w+)\s+(\w+);''')
 
 file = open("EesTraderDefine.h")
 
@@ -19,7 +19,6 @@ struct_name = ''
 filed_name = ''
 object_name = ''
 tab = '    '
-first_field = False
 
 header_file = open('EesTraderDefinePrint.hh', 'wb')
 
@@ -27,14 +26,12 @@ header_file.write('#ifndef EES_TRADER_DEFINE_PRINT_HH\n')
 header_file.write('#define EES_TRADER_DEFINE_PRINT_HH\n\n')
 
 header_file.write('#include <ostream>\n')
-header_file.write('#include "EesTraderDefine.h"\n\n')
+header_file.write('#include "EesTraderDefine.h"\n')
+header_file.write('#include "soil/json.hh"\n\n')
 
-# header_file.write('namespace ctp\n')
-# header_file.write('{\n')
-
-# cpp_file.write('#include "FtdcUserApiStructPrint.hh"\n\n')
-# cpp_file.write('namespace ctp\n')
-# cpp_file.write('{\n')
+header_file.write('using rapidjson::StringBuffer;\n')
+header_file.write('using rapidjson::PrettyWriter;\n')
+header_file.write('using soil::json::write_value;\n\n')
 
 for line in file:
 
@@ -50,45 +47,35 @@ for line in file:
         # print '%s' % result.groups()
         struct_name = result.group(1)
         object_name = 'a' + struct_name.replace('EES_', '')
-        # header_file.write('std::ostream& operator<<(std::ostream&, const %s&);\n\n' % struct_name)
-        header_file.write('template< typename CharT, typename TraitsT >\n')
-        header_file.write('std::basic_ostream< CharT, TraitsT >& operator<<(std::basic_ostream< CharT, TraitsT >& os, %s const& %s)\n' % (struct_name, object_name))
-        # print '%s' % object_name
-        # cpp_file.write('std::ostream& operator<<(std::ostream& os, const %s& %s)\n' % (struct_name, object_name))
+        header_file.write('inline std::ostream& operator<<(\n')
+        header_file.write('    std::ostream& os,\n')
+        header_file.write('    %s const& %s)' % (struct_name, object_name))
+
         continue
 
     result = left_brace_pattern.search(line)
     if result:
         # print 'left brace: %s' % line
         struct_status = True
-        header_file.write('{\n')
-        header_file.write('    os <<std::endl;\n')
-        header_file.write('    os <<"{" <<std::endl;\n')
-        header_file.write(r'    os <<"    \"%s\": {" <<std::endl;' %  struct_name)
-        header_file.write('\n')
+        header_file.write(' {  // NOLINT\n')
+        header_file.write('    StringBuffer sb;\n')
+        header_file.write('    PrettyWriter<StringBuffer> writer(sb);\n\n')
+        header_file.write('    writer.StartObject();\n')
+        header_file.write('    writer.Key(\"%s\");\n' % struct_name)
+        header_file.write('        writer.StartObject();\n')
 
-        # cpp_file.write('{\n')
-        # cpp_file.write('    os <<"{" <<std::endl;\n')
-        # cpp_file.write(r'    os <<"    \"%s\": {" <<std::endl;' %  struct_name)
-        # cpp_file.write('\n')
-        first_field = True
         continue
 
     result = right_brace_pattern.search(line)
     if result:
         # print 'right brace: %s' % line
         struct_status = False
-        header_file.write(r' <<"\"" <<std::endl;')
-        header_file.write('\n')
-        header_file.write('    os <<"    }" <<std::endl;\n')
-        header_file.write('    os <<"}" <<std::endl;\n')
+        header_file.write('        writer.EndObject();\n')
+        header_file.write('    writer.EndObject();\n\n')
+        header_file.write('    os <<sb.GetString();\n\n')
+        header_file.write('    return os;\n')
         header_file.write('}\n\n')
 
-        # cpp_file.write(r' <<"\"" <<std::endl;')
-        # cpp_file.write('\n')
-        # cpp_file.write('    os <<"    }" <<std::endl;\n')
-        # cpp_file.write('    os <<"}" <<std::endl;\n')
-        # cpp_file.write('}\n\n')
         continue
 
     result = field_pattern.search(line)
@@ -97,19 +84,11 @@ for line in file:
         if struct_status:
             # print 'field: %s.%s' % (struct_name, result.group(2))
             # fieldname: obj.filed_value
-            if not first_field:
-                header_file.write(r' <<"\"," <<std::endl;')
-                header_file.write('\n')
-
-                # cpp_file.write(r' <<"\"," <<std::endl;')
-                # cpp_file.write('\n')
-
-            # cpp_file.write(r'    os <<"        \"%s\": \"" <<%s.%s ' % (result.group(2), object_name, result.group(2)))
-            header_file.write(r'    os <<"        \"%s\": \"" <<%s.%s ' % (result.group(1), object_name, result.group(1)))
-            first_field = False
+            header_file.write('        writer.Key(\"%s\");\n' % result.group(2))
+            header_file.write('        write_value(\n')
+            header_file.write('            &writer,\n')
+            header_file.write('            %s.%s);\n' % (object_name, result.group(2)))
         continue
-
-    # print line
 
 
 header_file.write('#endif\n')
