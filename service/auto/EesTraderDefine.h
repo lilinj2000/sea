@@ -14,7 +14,7 @@
 #include <string.h>
 
 
-#define SL_EES_API_VERSION    "2.0.1.34"				///<  api版本号
+#define SL_EES_API_VERSION    "2.0.1.35"				///<  api版本号
 
 typedef int RESULT;										///< 定义返回值 
 typedef int ERR_NO;										///< 定义错误值 
@@ -64,6 +64,8 @@ typedef unsigned char EES_ExchangeID;					///< 交易所ID
 #define EES_ExchangeID_shfe                     103		///< =上期所
 #define EES_ExchangeID_dce                      104		///< =大商所
 #define EES_ExchangeID_zcze                     105		///< =郑商所
+#define EES_ExchangeID_ine						106		///< =能源中心
+#define EES_ExchangeID_sge						107		///< =上海金交所
 #define EES_ExchangeID_done_away                255		///< =Done-away 
 
 

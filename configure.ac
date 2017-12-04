@@ -69,7 +69,7 @@ AC_SUBST(BOOST_CPPFLAGS)
 AC_SUBST(BOOST_LIBADD)
 
 dnl rem api lib
-REM_HOME=$home_3rd/rem_api_2.0.1.34
+REM_HOME=$home_3rd/rem_api_2.0.1.35
 AC_ARG_WITH([rem],
     [AS_HELP_STRING([--with-rem],
         [path of the rem api, defaults to $REM_HOME])],

@@ -441,7 +441,7 @@ public:
 
 	/// 批量下单，最多一次下4个报单
 	/// 注意每个报单的的OrderToken必须保证在外部就设置好不重复，
-	/// pArrOrders: EES_EnterOrderField结构体数组，最多10个，nCount必须 >=1，且 <=4
+	/// pArrOrders: EES_EnterOrderField结构体数组，最多4个，nCount必须 >=1，且 <=4
 	/// \return: 成功返回0，任意一个报单有错，则返回非0值，且所有报单都不会被发送
 	virtual RESULT EnterMultiOrders(EES_EnterOrderField* pArrOrders, int nCount) = 0;
 
