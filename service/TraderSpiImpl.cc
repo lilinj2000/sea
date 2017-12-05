@@ -51,8 +51,13 @@ void TraderSpiImpl::OnUserLogon(
 
   SOIL_DEBUG_IF_PRINT(pLogon);
 
-  service_->initSession(pLogon);
-  service_->notify();
+  if (pLogon->m_Result != 0) {
+    SOIL_ERROR("login failed. result is {}",
+               pLogon->m_Result);
+  } else {
+    service_->initSession(pLogon);
+    service_->notify();
+  }
 }
 
 void TraderSpiImpl::OnRspChangePassword(
