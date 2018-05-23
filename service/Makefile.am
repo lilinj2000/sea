@@ -30,14 +30,14 @@ libsea_la_LDFLAGS = \
 
 # header files
 noinst_HEADERS = \
-	EesTraderDefinePrint.hh \
-	TraderOptions.hh \
-	TraderServiceImpl.hh \
-	TraderSpiImpl.hh \
-	MDOptions.hh \
-	EESQuoteDefinePrint.hh \
-	SeaUtil.hh \
-	MDSpiImpl.hh \
-	MDServiceImpl.hh
+	EesTraderDefinePrint.h \
+	TraderOptions.h \
+	TraderServiceImpl.h \
+	TraderSpiImpl.h \
+	MDOptions.h \
+	EESQuoteDefinePrint.h \
+	SeaUtil.h \
+	MDSpiImpl.h \
+	MDServiceImpl.h
 
 

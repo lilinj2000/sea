@@ -1,17 +1,41 @@
-// Copyright (c) 2010
-// All rights reserved.
+// Copyright 2017 The Sea Authors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+// -----------------------------------------------------------------------------
+// File: [file_name]
+// -----------------------------------------------------------------------------
+//
+// [file_descrition]
+//
+// Example:
+//
+//   ... ...
+//
+//
 
-#ifndef SEA_TRADER_SERVICE_IMPL_HH
-#define SEA_TRADER_SERVICE_IMPL_HH
+
+#ifndef SERVICE_TRADER_SERVICE_IMPL_H_
+#define SERVICE_TRADER_SERVICE_IMPL_H_
 
 #include <memory>
 #include <atomic>
 #include <string>
 
-#include "sea/TraderService.hh"
+#include "sea/TraderService.h"
 #include "EesTraderApi.h"
-#include "soil/STimer.hh"
-#include "soil/json.hh"
+#include "soil/s_timer.h"
+#include "soil/json.h"
 
 namespace sea {
 
